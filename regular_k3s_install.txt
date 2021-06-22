@@ -1,0 +1,36 @@
+/usr/local/bin/k3s-uninstall.sh
+
+k3sup install \
+  --ip=<first-node-ipaddress> \
+  --user=root \
+  --sudo \
+  --tls-san=<VIP-address> \
+  --cluster \
+  --k3s-channel=stable \
+  --k3s-extra-args "--no-deploy=traefik --no-deploy=servicelb --flannel-iface=ens3 --node-ip=<first-node-ipaddress>" \
+  --merge \
+  --local-path $HOME/.kube/config \
+  --ssh-key ~/.ssh/private_key \
+  --context=k3s-ha
+
+
+
+export KUBECONFIG=/root/.kube/config
+kubectl config set-context k3s-ha
+kubectl get node -o wide
+
+kubectl apply -f https://kube-vip.io/manifests/rbac.yaml
+
+ctr image pull docker.io/plndr/kube-vip:0.3.2
+
+alias kube-vip="ctr run --rm --net-host docker.io/plndr/kube-vip:0.3.2 vip /kube-vip"
+
+
+kube-vip manifest daemonset \
+    --arp \
+    --interface ens3 \
+    --address <VIP-address> \
+    --controlplane \
+    --leaderElection \
+    --taint \
+    --inCluster | tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml

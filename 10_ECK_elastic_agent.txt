@@ -1,0 +1,1 @@
+# kubectl apply -f https://raw.githubusercontent.com/elastic/cloud-on-k8s/1.6/config/recipes/elastic-agent/kubernetes-integration.yaml

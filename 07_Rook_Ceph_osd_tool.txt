@@ -1,0 +1,65 @@
+Delete/Replace OSD
+
+Stop the Rook Operator
+# kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=0
+-----------------------------------
+Purge the OSD from the Ceph cluster
+OSD removal can be automated with the example found in the rook-ceph-purge-osd job. In the osd-purge.yaml, change the <OSD-IDs> to the ID(s) of the OSDs you want to remove.
+# cd /rook/cluster/examples/kubernetes/ceph/
+# vi osd-purge.yaml
+
+TODO: Insert the OSD ID in the last parameter that is to be removed
+          # The OSD IDs are a comma-separated list. For example: "0" or "0,2".
+          args: ["ceph", "osd", "remove", "--osd-ids", "4,7"]
+
+# kubectl create -f osd-purge.yaml
+When the job is completed, review the logs to ensure success: 
+# kubectl -n rook-ceph logs -l app=rook-ceph-purge-osd
+When finished, you can delete the job: 
+# kubectl delete -f osd-purge.yaml
+
+The operator can automatically remove OSD deployments that are considered “safe-to-destroy” by Ceph. 
+After the steps above, the OSD will be considered safe to remove since the data has all been moved to other OSDs. 
+But this will only be done automatically by the operator if you have this setting in the cluster CR:
+
+removeOSDsIfOutAndSafeToRemove: true
+Otherwise, you will need to delete the deployment directly:
+
+# kubectl delete deployment -n rook-ceph rook-ceph-osd-<ID>
+----------------------------
+Delete the underlying data
+
+# rm -rf /var/lib/rook
+
+Zapping Devices
+Disks on nodes used by Rook for osds can be reset to a usable state with the following methods:
+
+#!/usr/bin/env bash
+DISK="/dev/vdb"
+
+# Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)
+
+# You will have to run this step for all disks.
+sgdisk --zap-all $DISK
+
+# Clean hdds with dd
+dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+
+# Clean disks such as ssd with blkdiscard instead of dd
+blkdiscard $DISK
+
+# These steps only have to be run once on each node
+# If rook sets up osds using ceph-volume, teardown leaves some devices mapped that lock the disks.
+ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
+
+# ceph-volume setup can leave ceph-<UUID> directories in /dev and /dev/mapper (unnecessary clutter)
+rm -rf /dev/ceph-*
+rm -rf /dev/mapper/ceph--*
+
+# Inform the OS of partition table changes
+partprobe $DISK
+
+----------------------------
+Start the Rook Operator
+
+# kubectl -n rook-ceph scale deployment rook-ceph-operator --replicas=1

@@ -1,0 +1,21 @@
+Create Erasure Code Storage Class for block devices
+
+# cd /rook/cluster/examples/kubernetes/ceph/csi/rbd
+# vi storageclass-ec.yaml
+
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: ec-data-pool
+  namespace: rook-ceph # namespace:cluster
+spec:
+  # Make sure you have enough nodes and OSDs running bluestore to support the replica size or erasure code chunks.
+  # For the below settings, you need at least 3 OSDs on different nodes (because the `failureDomain` is `host` by default).
+  erasureCoded:
+    dataChunks: 3
+    codingChunks: 2
+
+# kubectl create -f storageclass-ec.yaml
+
+Delete storage class:
+# kubectl delete storageclass rook-ceph-block

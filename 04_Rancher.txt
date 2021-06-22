@@ -1,0 +1,61 @@
+
+# vi /var/lib/rancher/k3s/server/manifests/cert-manager.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  chart: cert-manager
+  targetNamespace: cert-manager
+  repo: https://charts.jetstack.io
+  valuesContent: |-
+    installCRDs: true
+
+# kubectl get pods --namespace cert-manager
+
+
+# vi /var/lib/rancher/k3s/server/manifests/rancher.yaml
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cattle-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: rancher
+  namespace: kube-system
+spec:
+  chart: rancher
+  targetNamespace: cattle-system
+  repo: https://releases.rancher.com/server-charts/stable
+  valuesContent: |-
+    hostname: rancher.demo.com
+    rancherImageTag: v2.5.8
+
+---------------------------------------------------
+Expose Rancher UI to external loadbalancer:
+# kubectl edit svc rancher -n cattle-system
+
+Change "type: ClusterIP" to "type: LoadBalancer"
+---------------------------------------------
+
+# kubectl -n cattle-system rollout status deploy/rancher
+# kubectl -n cattle-system get deploy rancher
+# kubectl get endpoints --all-namespaces
+# kubectl get deployments --all-namespaces
+
+-----------------------------
+Debugging (https://rancher.com/docs/rancher/v2.x/en/troubleshooting/logging/):
+# kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns=name:.metadata.name | while read rancherpod; do kubectl -n cattle-system exec $rancherpod -c rancher -- loglevel --set debug; done
+
+Disable Debug logging:
+# kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns=name:.metadata.name | while read rancherpod; do kubectl -n cattle-system exec $rancherpod -c rancher -- loglevel --set info; done

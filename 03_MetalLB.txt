@@ -1,0 +1,28 @@
+
+Install MetalLB:
+
+# curl -s https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml > /var/tmp/metallb.yaml; \
+echo '---' >> /var/tmp/metallb.yaml; \
+curl -s https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml >> /var/tmp/metallb.yaml; \
+mv /var/tmp/metallb.yaml /var/lib/rancher/k3s/server/manifests
+
+Create secret:
+# kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+Create configmap:
+# vi metallb-config.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - <X.X.X.X-X.X.X.X>
+
+# kubectl apply -f metallb-config.yaml

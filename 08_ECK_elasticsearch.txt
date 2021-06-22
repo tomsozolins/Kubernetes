@@ -1,0 +1,102 @@
+HELM install >1.3.0:
+helm repo add elastic https://helm.elastic.co
+helm repo update
+kubectl create namespace elastic-system
+helm install elastic-operator elastic/eck-operator -n elastic-system
+/////////////// need to check later
+-------------------------------
+Deploy ECK operator
+Install custom resource definitions and the operator with its RBAC rules:
+# kubectl apply -f https://download.elastic.co/downloads/eck/1.6.0/all-in-one.yaml
+
+Monitor the operator logs:
+# kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
+-----------------------------
+Deploy Elasticsearch
+
+# vi elasticsearch.yaml
+
+# This sets up an Elasticsearch cluster with 3 nodes.
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 7.13.2
+  nodeSets:
+  - name: default
+    config:
+      node.master: true
+      node.data: true
+      node.ingest: true
+      node.ml: true
+      node.store.allow_mmap: false
+    podTemplate:
+      metadata:
+        labels:
+          app: elasticsearch
+      spec:
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+        containers:
+        - name: elasticsearch
+          # specify resource limits and requests
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 0.5
+            limits:
+              memory: 4Gi
+              cpu: 1
+          env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms2g -Xmx2g"
+    count: 3
+    # request 10Gi of persistent data storage for pods in this topology element
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: rook-ceph-block
+        resources:
+          requests:
+            storage: 100Gi
+  http:
+    service:
+      spec:
+        # expose this cluster Service with a LoadBalancer
+        type: LoadBalancer
+  # tls:
+  #   certificate:
+  #     secretName: elasticsearch-es-http-certs-public
+  #     selfSignedCertificate:
+  #       # add a list of SANs into the self-signed HTTP certificate
+  #       subjectAltNames:
+  #       - ip: 192.168.1.2
+  #       - ip: 192.168.1.3
+  #       - dns: elasticsearch-sample.example.com
+  #     certificate:
+  #       # provide your own certificate
+  #       secretName: my-cert
+
+
+# kubectl apply -f elasticsearch.yaml
+# kubectl get elasticsearch
+# kubectl get service elasticsearch-es-http
+
+# kubectl get elasticsearch -n logging
+
+Get elastic user pass:
+# echo $(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
+
+Get external IP:
+# kubectl get service elasticsearch-es-http
+
+To test it you must first download the automatically generated SSL certificate. You can do it by running:
+# kubectl get secret elasticsearch-es-http-certs-public -o 'go-template={{index .data "ca.crt"}}' | base64 --decode >> ca.crt
+Then use to perform a GET request at https://<external-ip>:9200

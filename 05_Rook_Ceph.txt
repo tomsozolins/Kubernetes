@@ -1,0 +1,114 @@
+
+
+# git clone --single-branch --branch v1.6.5 https://github.com/rook/rook.git
+
+# cd rook/cluster/examples/kubernetes/ceph
+
+# kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+
+# vi cluster.yaml
+removeOSDsIfOutAndSafeToRemove: true
+# kubectl create -f cluster.yaml
+
+Verify the rook-ceph-operator is in the `Running` state before proceeding
+# kubectl -n rook-ceph get pod
+
+-----------------
+Toolbox
+
+# vi toolbox.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rook-ceph-tools
+  namespace: rook-ceph
+  labels:
+    app: rook-ceph-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rook-ceph-tools
+  template:
+    metadata:
+      labels:
+        app: rook-ceph-tools
+    spec:
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: rook-ceph-tools
+        image: rook/ceph:v1.6.5
+        command: ["/tini"]
+        args: ["-g", "--", "/usr/local/bin/toolbox.sh"]
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ROOK_CEPH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: rook-ceph-mon
+                key: ceph-username
+          - name: ROOK_CEPH_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: rook-ceph-mon
+                key: ceph-secret
+        volumeMounts:
+          - mountPath: /etc/ceph
+            name: ceph-config
+          - name: mon-endpoint-volume
+            mountPath: /etc/rook
+      volumes:
+        - name: mon-endpoint-volume
+          configMap:
+            name: rook-ceph-mon-endpoints
+            items:
+            - key: data
+              path: mon-endpoints
+        - name: ceph-config
+          emptyDir: {}
+      tolerations:
+        - key: "node.kubernetes.io/unreachable"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 5
+
+
+Launch the rook-ceph-tools pod:
+# kubectl create -f toolbox.yaml
+
+Wait for the toolbox pod to download its container and get to the running state:
+# kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
+
+# kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
+
+---------------------------
+All available tools in the toolbox are ready for your troubleshooting needs.
+
+Example:
+ceph status
+ceph osd status
+ceph df
+rados df
+
+When you are done with the toolbox, you can remove the deployment:
+# kubectl -n rook-ceph delete deploy/rook-ceph-tools
+
+# kubectl -n rook-ceph get cephcluster
+----------------------
+Ceph Dashboard
+Load Balancer
+If you have a cluster on a cloud provider that supports load balancers, you can create a service that is provisioned with a public hostname. 
+The yaml is the same as dashboard-external-https.yaml except for the following property:
+
+# kubectl create -f dashboard-loadbalancer.yaml
+# kubectl -n rook-ceph get service
+
+You will see the new service rook-ceph-mgr-dashboard-loadbalancer created:
+
+# kubectl -n rook-ceph get service
+
+Get Dashboard login credentials (admin:<pass>):
+# kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath="{['data']['password']}" | base64 --decode && echo
+
+------------------------------

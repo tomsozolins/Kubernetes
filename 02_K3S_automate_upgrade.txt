@@ -1,0 +1,52 @@
+
+# kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.0/system-upgrade-controller.yaml
+
+# vi plans.yaml
+
+# Server plan
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: server-plan
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/master
+      operator: In
+      values:
+      - "true"
+  serviceAccountName: system-upgrade
+  channel: https://update.k3s.io/v1-release/channels/stable
+  upgrade:
+    image: rancher/k3s-upgrade
+---
+# Agent plan
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: agent-plan
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/master
+      operator: DoesNotExist
+  prepare:
+    args:
+    - prepare
+    - server-plan
+    image: rancher/k3s-upgrade:v1.17.4-k3s1
+  serviceAccountName: system-upgrade
+  channel: https://update.k3s.io/v1-release/channels/stable
+  upgrade:
+    image: rancher/k3s-upgrade
+
+# kubectl apply -f plans.yaml
+
+# kubectl -n system-upgrade get plans -o yaml
+# kubectl -n system-upgrade get jobs -o yaml
