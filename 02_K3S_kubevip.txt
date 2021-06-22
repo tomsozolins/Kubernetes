@@ -100,7 +100,7 @@ Server:
 Agent:
 # /usr/local/bin/k3s-agent-uninstall.sh
 ----------------------------------
-Enable Traefik Dashboard, non persistent
+Enable Traefik Dashboard (this is non persistent method, need to check later!!!)
 
 # vi /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
 
