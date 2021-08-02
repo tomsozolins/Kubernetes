@@ -12,11 +12,13 @@ Add private ssh key to ~/.ssh/id_rsa
 # k3sup install \
 	--host=kube-node1 \
 	--user=root \
-	--local-path=config.k3s.yaml \
 	--context k3s-ha \
 	--cluster \
 	--tls-san <VIP-address> \
-	--k3s-extra-args="--disable servicelb --resolv-conf" // if traeafik not needed --disable servicelb,traefik // if need taint master nodes: --node-taint node-role.kubernetes.io/master=true:NoSchedule
+	--k3s-extra-args="--disable servicelb --resolv-conf" // if traeafik not needed --disable servicelb,traefik 
+
+// custom config name: --local-path=config.k3s.yaml
+// if need taint master nodes: --node-taint node-role.kubernetes.io/master=true:NoSchedule
 
 # Test your cluster with:
 export KUBECONFIG=/root/config.k3s.yaml
