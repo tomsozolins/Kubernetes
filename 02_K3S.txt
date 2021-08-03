@@ -3,11 +3,11 @@ K3S HA installation
 On first master node:
 Kube-VIP setup https://kube-vip.io/usage/k3s/
 # mkdir -p /var/lib/rancher/k3s/server/manifests/
-# curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/rbac.yaml
+# curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
 
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
-# curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/vip.yaml
+# curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
 
 # curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644 \
 -t agent-secret --tls-san $VIP --disable servicelb" sh -s - server --cluster-init
