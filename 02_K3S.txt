@@ -25,10 +25,14 @@ Add private ssh key to ~/.ssh/id_rsa
 	--k3s-extra-args="--disable servicelb"
 -------------------
 Kube-vip installation
-# curl -s https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
+
+# curl -s https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
 # curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
+# vi /etc/rancher/k3s/k3s.yaml
+- cluster:
+     server: <VIP-address>
 -------------------------
 Add master nodes:
 # k3sup join --host=<node-name> --server-user=root --server-host=<VIP-address> --user=root --server --k3s-extra-args="--disable servicelb"
@@ -51,14 +55,9 @@ or
 
 Check status:
 # kubectl get all --all-namespaces
-# kubectl get node -o wide
-# kubectl get all
-# k3s kubectl get pods --all-namespaces
-# kubectl -n kube-system edit configmap traefik
+# kubectl get nodes -o wide
 # kubectl get endpoints -n kube-system
-# kubectl get pods -n kube-system
 # kubectl get service -n kube-system
-Show leader:
 # kubectl get endpoints kube-controller-manager --namespace=kube-system -o yaml
 
 -------------------------------
