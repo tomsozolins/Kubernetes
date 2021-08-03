@@ -1,24 +1,42 @@
-K3S HA installation
+K3S installation
+------------
+Prepare OS
+# vi /etc/hostname
+# vi /etc/hosts
+# vi /etc/chrony.conf
+pool <ntp-server-address> iburst prefer
+# systemctl restart chronyd
 
+# vi ~/.ssh/authorized_keys
+Remove this line, if exists:
+no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login as the user \"ubuntu\" rather than the user \"root\".';echo;sleep 10"
+----------------------------
 On first master node:
-Kube-VIP setup https://kube-vip.io/usage/k3s/
-# mkdir -p /var/lib/rancher/k3s/server/manifests/
-# curl https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
+# curl -sLS https://get.k3sup.dev | sh
 
+Add private ssh key to ~/.ssh/id_rsa
+# vi ~/.ssh/id_rsa
+
+# k3sup install \
+	--host=kube-node1 \
+	--user=root \
+	--cluster \
+	--tls-san <VIP-address> \
+	--k3s-extra-args="--disable servicelb"
+-------------------
+Kube-vip installation
+# curl -s https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
 # curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
+-------------------------
+Add master nodes:
+# k3sup join --host=<node-name> --server-user=root --server-host=<VIP-address> --user=root --server --k3s-extra-args="--disable servicelb"
 
-# curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644 \
--t agent-secret --tls-san $VIP --disable servicelb" sh -s - server --cluster-init
-------------------
-Other master nodes:
+Add worker nodes:
+# k3sup join --host=<node-name> --server-user=root --server-host=<VIP-address> --user=root
 
-# export VIP=x.x.x.x
-# export INTERFACE=ethx
-# curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--write-kubeconfig-mode 644 \
--t agent-secret --tls-san $VIP" sh -s - server https://<ip or hostname of server1>:6443
----------------
+-------------------------------
 Kube-vip Cloud Provider installation
 https://kube-vip.io/usage/on-prem/
 
@@ -30,20 +48,26 @@ or
 # kubectl create configmap --namespace kube-system kubevip --from-literal range-global=X.X.X.X-X.X.X.X
 
 -------------------------------
+
 Check status:
 # kubectl get all --all-namespaces
 # kubectl get node -o wide
+# kubectl get all
 # k3s kubectl get pods --all-namespaces
+# kubectl -n kube-system edit configmap traefik
 # kubectl get endpoints -n kube-system
-
+# kubectl get pods -n kube-system
+# kubectl get service -n kube-system
 Show leader:
 # kubectl get endpoints kube-controller-manager --namespace=kube-system -o yaml
 
 -------------------------------
 Uninstall K3S
+
 Server:
 # /usr/local/bin/k3s-uninstall.sh
 
 Agent:
 # /usr/local/bin/k3s-agent-uninstall.sh
-----------------------------------
+
+---------------
