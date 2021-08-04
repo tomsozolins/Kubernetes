@@ -1,5 +1,12 @@
+Install Rook Ceph Operator
+https://rook.io/docs/rook/v1.6/helm-operator.html
+
+# helm repo add rook-release https://charts.rook.io/release
+# kubectl create namespace rook-ceph
+# helm install --namespace rook-ceph rook-ceph rook-release/rook-ceph
 
 
+OLD///
 # git clone --single-branch --branch v1.6.5 https://github.com/rook/rook.git
 
 # cd rook/cluster/examples/kubernetes/ceph
