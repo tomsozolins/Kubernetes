@@ -44,6 +44,7 @@ https://kube-vip.io/usage/on-prem/
 # kubectl create configmap --namespace kube-system kubevip --from-literal range-global=X.X.X.X-X.X.X.X
 # kubectl describe pods -n kube-system kube-vip-cloud-provider-0
 # kubectl logs -n kube-system kube-vip-cloud-provider-0 -f
+# kubectl get configmap kubevip -o json -n kube-system
 -------------------------------
 
 Check status:
