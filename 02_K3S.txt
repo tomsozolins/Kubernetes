@@ -36,16 +36,6 @@ Add worker nodes:
 # k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root
 
 -------------------------------
-Kube-vip Cloud Provider installation
-https://kube-vip.io/usage/on-prem/
-
-# kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
-# kubectl delete configmap --namespace kube-system kubevip
-# kubectl create configmap --namespace kube-system kubevip --from-literal range-global=X.X.X.X-X.X.X.X
-# kubectl describe pods -n kube-system kube-vip-cloud-provider-0
-# kubectl logs -n kube-system kube-vip-cloud-provider-0 -f
-# kubectl get configmap kubevip -o json -n kube-system
--------------------------------
 
 Check status:
 # kubectl get all --all-namespaces
@@ -64,3 +54,27 @@ Agent:
 # /usr/local/bin/k3s-agent-uninstall.sh
 
 ---------------
+MetalLB:
+# helm repo add metallb https://metallb.github.io/metallb
+# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+# vi values.yaml
+configInline:
+  address-pools:
+   - name: default
+     protocol: layer2
+     addresses:
+     - <X.X.X.X-X.X.X.X>
+     
+# helm install metallb metallb/metallb -f values.yaml
+---------------
+OLD:
+Kube-vip Cloud Provider installation
+https://kube-vip.io/usage/on-prem/
+
+# kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
+# kubectl delete configmap --namespace kube-system kubevip
+# kubectl create configmap --namespace kube-system kubevip --from-literal range-global=X.X.X.X-X.X.X.X
+# kubectl describe pods -n kube-system kube-vip-cloud-provider-0
+# kubectl logs -n kube-system kube-vip-cloud-provider-0 -f
+# kubectl get configmap kubevip -o json -n kube-system
