@@ -42,9 +42,24 @@ Install Rancher
   --set replicas=3
   
 
+ Fix bad handshake bug:
+ https://github.com/rancher/rancher/issues/26082
+ # helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher \
+  --set replicas=1
+ 
+ Expose Rancher with LoadBalancer:
+ # kubectl edit svc rancher -n cattle-system
+ type: LoadBalancer
+
 ---------------------------------------------
+Troubleshoot:
 # kubectl -n cattle-system rollout status deploy/rancher
 # kubectl -n cattle-system get deploy rancher
+# kubectl get ingress -n cattle-system
+# kubectl -n cattle-system get pods -l app=rancher -o wide
+# kubectl -n cattle-system logs -l app=rancher
 
 Debugging (https://rancher.com/docs/rancher/v2.x/en/troubleshooting/logging/):
 # kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns=name:.metadata.name | while read rancherpod; do kubectl -n cattle-system exec $rancherpod -c rancher -- loglevel --set debug; done
