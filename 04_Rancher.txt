@@ -36,23 +36,12 @@ Install the cert-manager Helm chart
 ------------------------
 Install Rancher
 
+Hostname needs to be valid for ingress route
+
 # helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=rancher \
   --set replicas=3
-  
-
- Fix bad handshake bug:
- https://github.com/rancher/rancher/issues/26082
- # helm install rancher rancher-stable/rancher \
-  --namespace cattle-system \
-  --set hostname=rancher \
-  --set replicas=1
- 
- Expose Rancher with LoadBalancer:
- # kubectl edit svc rancher -n cattle-system
- type: LoadBalancer
-
 ---------------------------------------------
 Troubleshoot:
 # kubectl -n cattle-system rollout status deploy/rancher
