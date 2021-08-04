@@ -1,95 +1,59 @@
-Install Rook Ceph Operator
+----------------------------
+Deploy Rook Ceph Operator
 https://rook.io/docs/rook/v1.6/helm-operator.html
 
 # helm repo add rook-release https://charts.rook.io/release
 # kubectl create namespace rook-ceph
 # helm install --namespace rook-ceph rook-ceph rook-release/rook-ceph
+# kubectl --namespace rook-ceph get pods -l "app=rook-ceph-operator"
+-------------------------
+Deploy Ceph cluster
+
+# helm repo add rook-master https://charts.rook.io/master
+# vi values-override.yaml
 
 
-OLD///
-# git clone --single-branch --branch v1.6.5 https://github.com/rook/rook.git
+# Installs a debugging toolbox deployment
+toolbox:
+  enabled: true
+  image: rook/ceph:v1.6.8
+  tolerations: []
+  affinity: {}
 
-# cd rook/cluster/examples/kubernetes/ceph
+monitoring:
+  # requires Prometheus to be pre-installed
+  # enabling will also create RBAC rules to allow Operator to create ServiceMonitors
+  enabled: true
+  rulesNamespaceOverride:
 
-# kubectl create -f crds.yaml -f common.yaml -f operator.yaml
-
-# vi cluster.yaml
-removeOSDsIfOutAndSafeToRemove: true
-# kubectl create -f cluster.yaml
-
-Verify the rook-ceph-operator is in the `Running` state before proceeding
-# kubectl -n rook-ceph get pod
-
------------------
-Toolbox
-
-# vi toolbox.yaml
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: rook-ceph-tools
-  namespace: rook-ceph
-  labels:
-    app: rook-ceph-tools
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: rook-ceph-tools
-  template:
-    metadata:
-      labels:
-        app: rook-ceph-tools
-    spec:
-      dnsPolicy: ClusterFirstWithHostNet
-      containers:
-      - name: rook-ceph-tools
-        image: rook/ceph:v1.6.5
-        command: ["/tini"]
-        args: ["-g", "--", "/usr/local/bin/toolbox.sh"]
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: ROOK_CEPH_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: rook-ceph-mon
-                key: ceph-username
-          - name: ROOK_CEPH_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: rook-ceph-mon
-                key: ceph-secret
-        volumeMounts:
-          - mountPath: /etc/ceph
-            name: ceph-config
-          - name: mon-endpoint-volume
-            mountPath: /etc/rook
-      volumes:
-        - name: mon-endpoint-volume
-          configMap:
-            name: rook-ceph-mon-endpoints
-            items:
-            - key: data
-              path: mon-endpoints
-        - name: ceph-config
-          emptyDir: {}
-      tolerations:
-        - key: "node.kubernetes.io/unreachable"
-          operator: "Exists"
-          effect: "NoExecute"
-          tolerationSeconds: 5
+# imagePullSecrets option allow to pull docker images from private docker registry. Option will be passed to all service accounts.
+# imagePullSecrets:
+# - name: my-registry-secret
 
 
-Launch the rook-ceph-tools pod:
-# kubectl create -f toolbox.yaml
+# helm install --create-namespace --namespace rook-ceph rook-ceph-cluster \
+    --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f values-override.yaml
 
+NOTES:
+The Ceph Cluster has been installed. Check its status by running:
+  kubectl --namespace rook-ceph get cephcluster
+
+Visit https://rook.github.io/docs/rook/master/ceph-cluster-crd.html for more information about the Ceph CRD.
+
+Important Notes:
+- You can only deploy a single cluster per namespace
+- If you wish to delete this cluster and start fresh, you will also have to wipe the OSD disks using `sfdisk`
+
+Upgrade:
+# helm upgrade --create-namespace --namespace rook-ceph rook-ceph-cluster \
+    --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f values-override.yaml
+
+---------------------------------
+Ceph Toolbox
 Wait for the toolbox pod to download its container and get to the running state:
 # kubectl -n rook-ceph rollout status deploy/rook-ceph-tools
-
 # kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash
 
----------------------------
 All available tools in the toolbox are ready for your troubleshooting needs.
 
 Example:
