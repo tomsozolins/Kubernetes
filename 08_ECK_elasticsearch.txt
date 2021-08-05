@@ -1,13 +1,8 @@
-HELM install >1.3.0:
-helm repo add elastic https://helm.elastic.co
-helm repo update
-kubectl create namespace elastic-system
-helm install elastic-operator elastic/eck-operator -n elastic-system
-/////////////// need to check later
 -------------------------------
 Deploy ECK operator
 Install custom resource definitions and the operator with its RBAC rules:
-# kubectl apply -f https://download.elastic.co/downloads/eck/1.6.0/all-in-one.yaml
+# kubectl create -f https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
+# kubectl apply -f https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
 
 Monitor the operator logs:
 # kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
@@ -22,9 +17,10 @@ kind: Elasticsearch
 metadata:
   name: elasticsearch
 spec:
-  version: 7.13.2
+  version: 7.14.0
   nodeSets:
   - name: default
+    count: 4
     config:
       node.master: true
       node.data: true
@@ -54,7 +50,6 @@ spec:
           env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
-    count: 3
     # request 10Gi of persistent data storage for pods in this topology element
     volumeClaimTemplates:
     - metadata:
@@ -65,24 +60,12 @@ spec:
         storageClassName: rook-ceph-block
         resources:
           requests:
-            storage: 100Gi
+            storage: 2000Gi
   http:
     service:
       spec:
         # expose this cluster Service with a LoadBalancer
         type: LoadBalancer
-  # tls:
-  #   certificate:
-  #     secretName: elasticsearch-es-http-certs-public
-  #     selfSignedCertificate:
-  #       # add a list of SANs into the self-signed HTTP certificate
-  #       subjectAltNames:
-  #       - ip: 192.168.1.2
-  #       - ip: 192.168.1.3
-  #       - dns: elasticsearch-sample.example.com
-  #     certificate:
-  #       # provide your own certificate
-  #       secretName: my-cert
 
 
 # kubectl apply -f elasticsearch.yaml
