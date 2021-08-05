@@ -1,6 +1,6 @@
 ----------------------------
 Deploy Rook Ceph Operator
-https://rook.io/docs/rook/v1.6/helm-operator.html
+https://rook.io/docs/rook/v1.7/helm-operator.html
 
 # helm repo add rook-release https://charts.rook.io/release
 # kubectl create namespace rook-ceph
@@ -16,7 +16,7 @@ Deploy Ceph cluster
 # Installs a debugging toolbox deployment
 toolbox:
   enabled: true
-  image: rook/ceph:v1.6.8
+  image: rook/ceph:v1.7.0
   tolerations: []
   affinity: {}
 
