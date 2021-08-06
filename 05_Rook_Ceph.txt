@@ -14,7 +14,6 @@ Deploy Ceph cluster
 https://github.com/rook/rook/blob/master/cluster/charts/rook-ceph/values.yaml
 # vi values-override.yaml
 
-
 # Installs a debugging toolbox deployment
 toolbox:
   enabled: true
@@ -32,6 +31,10 @@ monitoring:
 # imagePullSecrets:
 # - name: my-registry-secret
 
+# Writing to the hostPath is required for the Ceph mon and osd pods. Given the restricted permissions in OpenShift with SELinux,
+# the pod must be running privileged in order to write to the hostPath volume, this must be set to true then.
+hostpathRequiresPrivileged: true
+
 
 # helm install --create-namespace --namespace rook-ceph rook-ceph-cluster \
     --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f values-override.yaml
@@ -47,9 +50,14 @@ Important Notes:
 - If you wish to delete this cluster and start fresh, you will also have to wipe the OSD disks using `sfdisk`
 
 Upgrade:
+# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm upgrade --create-namespace --namespace rook-ceph rook-ceph-cluster \
     --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f values-override.yaml
 
+---------------------------------
+Fix ceph-osd volume mount fail after node reboot (rocky linux)
+# dnf install lvm2
+# vgchange -ay
 ---------------------------------
 Ceph Toolbox
 Wait for the toolbox pod to download its container and get to the running state:
