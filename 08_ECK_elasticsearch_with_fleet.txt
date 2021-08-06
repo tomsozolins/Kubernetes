@@ -1,0 +1,82 @@
+
+
+# vi elasticsearch-fleet.yaml
+
+# This sets up an Elasticsearch cluster with 3 nodes.
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 7.14.0
+  nodeSets:
+  - name: default
+    count: 4
+    config:
+      node.master: true
+      node.data: true
+      node.ingest: true
+      node.ml: true
+      node.store.allow_mmap: false
+      # Fleet
+      xpack.fleet.agents.elasticsearch.host: "https://elasticsearch-es-http.default.svc:9200"
+      xpack.fleet.agents.fleet_server.hosts: ["https://fleet-server-agent-http.default.svc:8220"]
+      xpack.fleet.packages:
+      - name: kubernetes
+        version: latest
+      xpack.fleet.agentPolicies:
+      - name: Default Fleet Server on ECK policy
+        is_default_fleet_server: true
+        package_policies:
+        - package:
+            name: fleet_server
+          name: fleet_server-1
+      - name: Default Elastic Agent on ECK policy
+        is_default: true
+        unenroll_timeout: 900
+        package_policies:
+        - package:
+            name: system
+          name: system-1
+        - package:
+            name: kubernetes
+          name: kubernetes-1
+    podTemplate:
+      metadata:
+        labels:
+          app: elasticsearch
+      spec:
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+        containers:
+        - name: elasticsearch
+          # specify resource limits and requests
+          resources:
+            requests:
+              memory: 4Gi
+              cpu: 0.5
+            limits:
+              memory: 4Gi
+              cpu: 1
+          env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms2g -Xmx2g"
+    # request 10Gi of persistent data storage for pods in this topology element
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: rook-ceph-block
+        resources:
+          requests:
+            storage: 2000Gi
+  http:
+    service:
+      spec:
+        # expose this cluster Service with a LoadBalancer
+        type: LoadBalancer
