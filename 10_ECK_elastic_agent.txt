@@ -1,1 +1,4 @@
-# kubectl apply -f https://raw.githubusercontent.com/elastic/cloud-on-k8s/1.6/config/recipes/elastic-agent/kubernetes-integration.yaml
+https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-elastic-agent-fleet-configuration-examples.html
+
+# kubectl apply -f https://raw.githubusercontent.com/elastic/cloud-on-k8s/1.7/config/recipes/elastic-agent/fleet-kubernetes-integration.yaml
+
