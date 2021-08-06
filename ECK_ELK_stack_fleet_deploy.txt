@@ -126,7 +126,7 @@ kind: Agent
 metadata:
   name: fleet-server
 spec:
-  version: 7.14.0-SNAPSHOT
+  version: 7.14.0
   kibanaRef:
     name: kibana
   elasticsearchRefs:
@@ -147,7 +147,7 @@ kind: Agent
 metadata: 
   name: elastic-agent
 spec:
-  version: 7.14.0-SNAPSHOT
+  version: 7.14.0
   kibanaRef:
     name: kibana
   fleetServerRef: 
