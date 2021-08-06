@@ -10,6 +10,8 @@ https://rook.io/docs/rook/v1.7/helm-operator.html
 Deploy Ceph cluster
 
 # helm repo add rook-master https://charts.rook.io/master
+
+https://github.com/rook/rook/blob/master/cluster/charts/rook-ceph/values.yaml
 # vi values-override.yaml
 
 
