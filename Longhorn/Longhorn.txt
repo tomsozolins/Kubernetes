@@ -1,5 +1,10 @@
-
-
+Prepare disks:
+# parted /dev/vdX mklabel gpt unit TB mkpart primary 0% 100%
+# mkfs.xfs /dev/vdX1
+# mkdir -p /mnt/data1
+# mount /dev/vdX1 /mnt/data1
+# echo "/dev/vdX1 /mnt/data1 xfs defaults 1 2" >> /etc/fstab
+---
 # dnf install -y iscsi-initiator-utils
 # dnf install -y nfs-utils
 
@@ -16,4 +21,4 @@ type: LoadBalancer
 
 # kubectl -n longhorn-system get pod
 
-# parted /dev/vdX mklabel gpt unit TB mkpart primary 0% 100%
+
