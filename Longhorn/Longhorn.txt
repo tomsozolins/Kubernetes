@@ -15,3 +15,5 @@ type: LoadBalancer
 # helm install longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
 
 # kubectl -n longhorn-system get pod
+
+# parted /dev/vdX mklabel gpt unit TB mkpart primary 0% 100%
