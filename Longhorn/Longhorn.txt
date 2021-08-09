@@ -13,6 +13,9 @@ Prepare disks:
 
 # helm show values longhorn/longhorn > longhorn-values.yaml
 # vi longhorn-values.yaml
+
+defaultClassReplicaCount: 1
+
 type: LoadBalancer
 
 # kubectl create namespace longhorn-system
@@ -21,4 +24,29 @@ type: LoadBalancer
 
 # kubectl -n longhorn-system get pod
 
+---
 
+# vi longhorn-storageclass.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: longhorn-storageclass
+  namespace: longhorn-system
+data:
+  storageclass.yaml: |
+    kind: StorageClass
+    apiVersion: storage.k8s.io/v1
+    metadata:
+      name: longhorn-replica-1
+    provisioner: driver.longhorn.io
+    allowVolumeExpansion: true
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
+    parameters:
+      numberOfReplicas: "1"
+      staleReplicaTimeout: "30"
+      fromBackup: ""
+
+# kubectl apply -f longhorn-storageclass.yaml
+# kubectl get configmap longhorn-storageclass -n longhorn-system -o json
