@@ -2,5 +2,8 @@
 # export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 # helm repo update
+# helm search repo prometheus-community
 
-# helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+# helm show values prometheus-community/kube-prometheus-stack > prometheus-values.yaml
+# helm install prometheus-stack prometheus-community/kube-prometheus-stack --values longhorn-values.yaml
+# kubectl --namespace default get pods -l "release=prometheus-stack"
