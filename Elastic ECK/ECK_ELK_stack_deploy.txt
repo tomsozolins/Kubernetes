@@ -1,11 +1,14 @@
 -------------------------------
 Deploy ECK operator
-Install custom resource definitions and the operator with its RBAC rules:
-# kubectl create -f https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
-# kubectl apply -f https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
+
+# helm repo add elastic https://helm.elastic.co
+# helm repo update
+# helm install elastic-operator elastic/eck-operator -n elastic-system --create-namespace
 
 Monitor the operator logs:
-# kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
+# kubectl logs -n elastic-system sts/elastic-operator
+
+// # kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
 -----------------------------
 Create Kibana saved objects encrypted key:
 # kubectl create secret generic kibana-saved-objects-encrypted-key --from-literal=xpack.encryptedSavedObjects.encryptionKey="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)"
