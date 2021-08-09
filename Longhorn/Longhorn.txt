@@ -1,0 +1,17 @@
+
+
+# dnf install -y iscsi-initiator-utils
+# dnf install -y nfs-utils
+
+# helm repo add longhorn https://charts.longhorn.io
+# helm repo update
+
+# helm show values longhorn/longhorn > longhorn-values.yaml
+# vi longhorn-values.yaml
+type: LoadBalancer
+
+# kubectl create namespace longhorn-system
+# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+# helm install longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
+
+# kubectl -n longhorn-system get pod
