@@ -12,7 +12,7 @@ Deploy Ceph cluster
 # helm repo add rook-master https://charts.rook.io/master
 
 https://github.com/rook/rook/blob/master/cluster/charts/rook-ceph/values.yaml
-# vi values-override.yaml
+# vi rook-ceph-values.yaml
 
 # Installs a debugging toolbox deployment
 toolbox:
@@ -37,7 +37,7 @@ hostpathRequiresPrivileged: true
 
 
 # helm install --create-namespace --namespace rook-ceph rook-ceph-cluster \
-    --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f values-override.yaml
+    --set operatorNamespace=rook-ceph rook-master/rook-ceph-cluster -f rook-ceph-values.yaml
 
 NOTES:
 The Ceph Cluster has been installed. Check its status by running:
