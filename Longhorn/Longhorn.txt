@@ -50,3 +50,8 @@ data:
 
 # kubectl apply -f longhorn-storageclass.yaml
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
+
+---
+Uninstall:
+
+# helm uninstall longhorn longhorn/longhorn --namespace longhorn-system
