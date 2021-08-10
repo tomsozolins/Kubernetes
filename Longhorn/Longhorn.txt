@@ -6,17 +6,15 @@ Prepare disks:
 # echo "/dev/vdX1 /mnt/disk1 xfs defaults 1 2" >> /etc/fstab
 ---
 # dnf install -y iscsi-initiator-utils
+# systemctl start iscsid
+# systemctl enable iscsid
+
 # dnf install -y nfs-utils
 
 # helm repo add longhorn https://charts.longhorn.io
 # helm repo update
 
 # helm show values longhorn/longhorn > longhorn-values.yaml
-# vi longhorn-values.yaml
-
-defaultClassReplicaCount: 1
-
-type: LoadBalancer
 
 # kubectl create namespace longhorn-system
 # export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
