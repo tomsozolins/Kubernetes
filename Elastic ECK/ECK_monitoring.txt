@@ -350,3 +350,11 @@ spec:
           targetPort: 5601
 
 # kubectl apply -f elastic_eck_monitoring.yaml
+
+Get elastic user credentials:
+
+Elastic cluster
+# echo $(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
+
+Monitoring cluster
+# echo $(kubectl get secret elasticsearch-monitoring-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
