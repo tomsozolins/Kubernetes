@@ -342,6 +342,11 @@ spec:
     # enable the UI to reflect container level CPU usage, only displays info if CPU limits are set on the monitored ES cluster
     # https://www.elastic.co/guide/en/kibana/current/monitoring-settings-kb.html
     monitoring.ui.container.elasticsearch.enabled: true
+  podTemplate:
+      spec:
+        volumes:
+        - name: elasticsearch-data
+          emptyDir: {}
   http:
     service:
       spec:
