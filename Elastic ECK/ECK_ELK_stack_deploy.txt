@@ -100,7 +100,7 @@ spec:
       spec:
         accessModes:
         - ReadWriteOnce
-        storageClassName: rook-ceph-block
+        storageClassName: longhorn-r1
         resources:
           requests:
             storage: 1000Gi
