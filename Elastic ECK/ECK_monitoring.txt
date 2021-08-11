@@ -287,8 +287,8 @@ spec:
   podTemplate:
     metadata:
       labels:
-        scrape: kb
         app: kibana
+        scrape: kb
     spec:
       containers:
       - name: kibana
@@ -320,6 +320,11 @@ spec:
     count: 3
     config:
       node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        volumes:
+        - name: elasticsearch-data
+          emptyDir: {}
 ---
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
@@ -334,11 +339,6 @@ spec:
     # enable the UI to reflect container level CPU usage, only displays info if CPU limits are set on the monitored ES cluster
     # https://www.elastic.co/guide/en/kibana/current/monitoring-settings-kb.html
     monitoring.ui.container.elasticsearch.enabled: true
-  podTemplate:
-      spec:
-        volumes:
-        - name: elasticsearch-data
-          emptyDir: {}
   http:
     service:
       spec:
