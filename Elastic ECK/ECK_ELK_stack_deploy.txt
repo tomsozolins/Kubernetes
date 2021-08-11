@@ -85,15 +85,14 @@ spec:
           # specify resource limits and requests
           resources:
             requests:
-              memory: 4Gi
+              memory: 2Gi
               cpu: 0.5
             limits:
-              memory: 4Gi
+              memory: 2Gi
               cpu: 1
           env:
           - name: ES_JAVA_OPTS
-            value: "-Xms2g -Xmx2g"
-    # request 10Gi of persistent data storage for pods in this topology element
+            value: "-Xms1g -Xmx1g"
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
