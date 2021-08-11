@@ -23,6 +23,7 @@ Prepare disks:
 # kubectl -n longhorn-system get pod
 
 ---
+# kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/v1.1.2/examples/storageclass.yaml
 
 # vi longhorn-storageclass.yaml
 
