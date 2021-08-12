@@ -16,6 +16,7 @@ On first master node:
 
 Add private ssh key to ~/.ssh/id_rsa
 # vi ~/.ssh/id_rsa
+# chmod 400 ~/.ssh/id_rsa
 
 # k3sup install --cluster --user=root --ip <node-ip-address> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
 -------------------
