@@ -12,7 +12,7 @@
 
 # kubectl describe pod prometheus-rancher-monitoring-prometheus-0 --namespace cattle-monitoring-system
 
-If Prometheus gets OOMkilled then increase memory resources
+Prometheus OOMkilled - increase memory resources
 resources:
   limits:
     cpu: 1000m
