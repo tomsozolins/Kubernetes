@@ -6,4 +6,6 @@
 
 # helm show values prometheus-community/kube-prometheus-stack > prometheus-values.yaml
 # helm install prometheus-stack prometheus-community/kube-prometheus-stack --values longhorn-values.yaml
+
 # kubectl --namespace default get pods -l "release=prometheus-stack"
+# kubectl --namespace cattle-monitoring-system get pods -l "release=rancher-monitoring"
