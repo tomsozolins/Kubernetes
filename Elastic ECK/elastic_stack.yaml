@@ -1,1 +1,93 @@
-
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+spec:
+  version: 7.14.0
+  count: 1
+  elasticsearchRef:
+    name: "elasticsearch"
+  secureSettings:
+  - secretName: kibana-saved-objects-encrypted-key
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+        ports:
+        - name: https
+          protocol: TCP
+          port: 443
+          targetPort: 5601
+    #tls:
+      #selfSignedCertificate:
+        #subjectAltNames:
+        #- ip: 192.168.0.1
+        #- dns: example.com
+  # this shows how to customize the Kibana pod
+  # with labels and resource limits
+  podTemplate:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: 1
+---
+# This sets up an Elasticsearch cluster with 3 nodes.
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 7.14.0
+  nodeSets:
+  - name: default
+    count: 6
+    config:
+      node.master: true
+      node.data: true
+      node.ingest: true
+      node.ml: true
+      node.store.allow_mmap: false
+    podTemplate:
+      metadata:
+        labels:
+          app: elasticsearch
+      spec:
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+        containers:
+        - name: elasticsearch
+          # specify resource limits and requests
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms1g -Xmx1g"
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: longhorn-r1
+        resources:
+          requests:
+            storage: 1000Gi
+  http:
+    service:
+      spec:
+        # expose this cluster Service with a LoadBalancer
+        type: LoadBalancer
