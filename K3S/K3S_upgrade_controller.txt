@@ -1,5 +1,7 @@
 
-# kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.3/system-upgrade-controller.yaml
+///OLD # kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.3/system-upgrade-controller.yaml
+
+# kubectl apply -f https://raw.githubusercontent.com/rancher/system-upgrade-controller/master/manifests/system-upgrade-controller.yaml
 
 # vi /var/lib/rancher/k3s/server/manifests/system-upgrade-plans.yaml
 
