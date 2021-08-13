@@ -27,30 +27,8 @@ Prepare disks:
 ---
 # kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/v1.1.2/examples/storageclass.yaml
 
-# vi longhorn-storageclass-no-replica.yaml
+# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-storageclass-no-replica.yaml
 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: longhorn-storageclass
-  namespace: longhorn-system
-data:
-  storageclass.yaml: |
-    kind: StorageClass
-    apiVersion: storage.k8s.io/v1
-    metadata:
-      name: longhorn-r1
-    provisioner: driver.longhorn.io
-    allowVolumeExpansion: true
-    reclaimPolicy: Delete
-    volumeBindingMode: Immediate
-    parameters:
-      numberOfReplicas: "0"
-      dataLocality: "best-effort"
-      staleReplicaTimeout: "2880"
-      fromBackup: ""
-
-# kubectl apply -f longhorn-storageclass-no-replica.yaml
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 
 ---
