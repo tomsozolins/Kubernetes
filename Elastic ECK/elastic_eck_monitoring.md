@@ -3,7 +3,7 @@
 
 #### Deploy monitored stack
 ```
-# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/c31d14df7c741bcc706bd570d4fab5fa1a13c013/Elastic%20ECK/elastic_eck_monitored.yaml
+# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Elastic%20ECK/elastic_eck_monitored.yaml
 ```
 #### Get elastic user credentials
 ```
