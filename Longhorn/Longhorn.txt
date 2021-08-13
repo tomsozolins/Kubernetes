@@ -30,9 +30,9 @@ persistence:
 # kubectl -n longhorn-system get pod
 
 ---
-# kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/v1.1.2/examples/storageclass.yaml
-
 # kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-storageclass-no-replica.yaml
+
+# helm upgrade longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
 
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 
