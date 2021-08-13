@@ -5,7 +5,7 @@
 ```
 # kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/c31d14df7c741bcc706bd570d4fab5fa1a13c013/Elastic%20ECK/elastic_eck_monitored.yaml
 ```
-### Get elastic user credentials
+#### Get elastic user credentials
 ```
 # echo $(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
@@ -15,7 +15,7 @@
 ```
 # kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Elastic%20ECK/elastic_eck_monitoring.yaml
 ```
-### Get elastic user credentials
+#### Get elastic user credentials
 ```
 # echo $(kubectl get secret elasticsearch-monitoring-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
