@@ -19,7 +19,7 @@ Prometheus OOMkilled - increase memory resources
 resources:
   limits:
     cpu: 1000m
-    memory: 5000Mi
+    memory: 6000Mi
   requests:
     cpu: 750m
-    memory: 2500Mi
+    memory: 3000Mi
