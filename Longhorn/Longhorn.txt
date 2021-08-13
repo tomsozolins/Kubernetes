@@ -27,7 +27,7 @@ Prepare disks:
 ---
 # kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/v1.1.2/examples/storageclass.yaml
 
-# vi longhorn-storageclass.yaml
+# vi longhorn-storageclass-no-replica.yaml
 
 apiVersion: v1
 kind: ConfigMap
@@ -49,15 +49,8 @@ data:
       dataLocality: "best-effort"
       staleReplicaTimeout: "2880"
       fromBackup: ""
-    #  backingImage: "bi-test"
-    #  backingImageURL: "https://backing-image-example.s3-region.amazonaws.com/test-backing-image"
-    #  diskSelector: "ssd,fast"
-    #  nodeSelector: "storage,fast"
-    #  recurringJobs: '[{"name":"snap", "task":"snapshot", "cron":"*/1 * * * *", "retain":1},
-    #                   {"name":"backup", "task":"backup", "cron":"*/2 * * * *", "retain":1,
-    #                    "labels": {"interval":"2m"}}]'
 
-# kubectl apply -f longhorn-storageclass.yaml
+# kubectl apply -f longhorn-storageclass-no-replica.yaml
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 
 ---
