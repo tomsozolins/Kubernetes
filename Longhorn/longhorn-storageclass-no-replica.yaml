@@ -14,7 +14,7 @@ data:
     reclaimPolicy: Delete
     volumeBindingMode: Immediate
     parameters:
-      numberOfReplicas: "0"
+      numberOfReplicas: "1"
       dataLocality: "best-effort"
       staleReplicaTimeout: "2880"
       fromBackup: ""
