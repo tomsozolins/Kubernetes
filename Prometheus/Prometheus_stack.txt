@@ -5,7 +5,7 @@
 # helm search repo prometheus-community
 
 # helm show values prometheus-community/kube-prometheus-stack > prometheus-values.yaml
-# helm install prometheus-stack prometheus-community/kube-prometheus-stack --values longhorn-values.yaml
+# helm install prometheus-stack prometheus-community/kube-prometheus-stack --values prometheus-values.yaml
 
 
 
