@@ -8,7 +8,7 @@ data:
     kind: StorageClass
     apiVersion: storage.k8s.io/v1
     metadata:
-      name: longhorn-storageclass-single-replica
+      name: longhorn-single-replica
     provisioner: driver.longhorn.io
     allowVolumeExpansion: true
     reclaimPolicy: Delete
