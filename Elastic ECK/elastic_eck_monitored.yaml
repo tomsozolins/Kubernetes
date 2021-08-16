@@ -47,7 +47,7 @@ spec:
       spec:
         accessModes:
         - ReadWriteOnce
-        storageClassName: longhorn-r1
+        storageClassName: longhorn-single-replica
         resources:
           requests:
             storage: 1000Gi
