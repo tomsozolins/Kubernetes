@@ -2,6 +2,7 @@ https://docs.gitlab.com/charts/
 ```
 # helm repo add gitlab https://charts.gitlab.io/
 # helm repo update
-# helm get values gitlab > gitlab-values.yaml
-# helm upgrade gitlab gitlab/gitlab -f gitlab-values.yaml
+# helm install gitlab gitlab/gitlab \
+  --set global.hosts.domain=<DOMAIN> \
+  --set certmanager-issuer.email=email@example.com
 ```
