@@ -30,7 +30,7 @@ persistence:
 # kubectl -n longhorn-system get pod
 
 ---
-# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-storageclass-single-replica.yaml
+# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-single-replica.yaml
 
 # helm upgrade longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
 
