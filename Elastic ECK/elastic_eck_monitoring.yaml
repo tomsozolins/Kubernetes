@@ -114,7 +114,7 @@ roleRef:
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: filebeat-monitoring
+  name: filebeat
 spec:
   type: filebeat
   version: 7.14.0
