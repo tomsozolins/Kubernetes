@@ -1,3 +1,9 @@
+#### Delete existing operator
+```
+# kubectl delete -f https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
+# kubectl delete -f https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
+```
+
 #### Deploy ECK operator
 
 ```
