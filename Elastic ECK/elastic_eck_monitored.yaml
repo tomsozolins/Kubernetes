@@ -81,8 +81,6 @@ spec:
           limits:
             memory: 1Gi
             cpu: 1
-  secureSettings:
-  - secretName: kibana-saved-objects-encrypted-key
   http:
     service:
       spec:
