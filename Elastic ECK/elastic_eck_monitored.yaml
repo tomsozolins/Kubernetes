@@ -7,7 +7,7 @@ spec:
   version: 7.14.0
   nodeSets:
   - name: default
-    count: 6
+    count: 7
     config:
       node.master: true
       node.data: true
