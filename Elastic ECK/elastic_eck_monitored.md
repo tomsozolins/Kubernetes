@@ -57,7 +57,7 @@ spec:
   nodeSets:
   - name: default
     config:
-      reindex.remote.whitelist: elastic-host:9200
+      reindex.remote.whitelist: "otherhost:9200, another:9200, 127.0.10.*:9200, localhost:*"
       reindex.ssl.verification_mode: none
 ```
 
