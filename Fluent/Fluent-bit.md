@@ -2,10 +2,14 @@
 # helm repo add fluent https://fluent.github.io/helm-charts
 # helm search repo fluent
 # helm show values fluent/fluent-bit > fluentbit-values.yaml
+```
 
+```
 ## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file
-Configure elastic eck output:
+# vi fluentbit-values.yaml
+```
 
+```
 env:
 - name: FLUENT_ELASTICSEARCH_HOST
   value: "elasticsearch-es-http"
@@ -34,6 +38,9 @@ config:
         Retry_Limit     False
         TLS             On
         TLS.verify      Off
+        
+```
 
+```
 # helm install fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
 ```
