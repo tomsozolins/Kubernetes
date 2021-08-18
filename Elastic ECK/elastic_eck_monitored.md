@@ -40,3 +40,50 @@ Monitor the operator logs
 ```
 # echo $(kubectl get secret elasticsearch-monitoring-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
+
+### Reindexing from remote cluster to new cluster
+
+#### Edit new cluster config to allow old remote cluster
+
+```
+# vi elastic_eck_monitored.yaml
+
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 7.14.0
+  nodeSets:
+  - name: default
+    config:
+      reindex.remote.whitelist: elastic-host:9200
+      reindex.ssl.verification_mode: none
+```
+
+```
+POST _reindex
+{
+  "source": {
+    "remote": {
+      "host": "https://elastic-host:9200",
+      "username": "user",
+      "password": "pass"
+    },
+    "index": "example-index",
+    "query": {
+      "match_all": {}
+    }
+  },
+  "dest": {
+    "index": "example-index"
+  }
+}
+
+```
+
+#### check status of reindexing
+
+```
+GET _tasks?actions=*reindex&detailed
+```
