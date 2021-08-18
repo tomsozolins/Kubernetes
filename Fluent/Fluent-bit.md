@@ -3,5 +3,37 @@
 # helm search repo fluent
 # helm show values fluent/fluent-bit > fluentbit-values.yaml
 
+## https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file
+Configure elastic eck output:
+
+env:
+- name: FLUENT_ELASTICSEARCH_HOST
+  value: "elasticsearch-es-http"
+- name: FLUENT_ELASTICSEARCH_PORT
+  value: "9200"
+- name: FLUENT_ELASTICSEARCH_USER
+  value: "elastic"
+- name: FLUENT_ELASTICSEARCH_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: elasticsearch-es-elastic-user
+      key: elastic
+
+config:
+  ## https://docs.fluentbit.io/manual/pipeline/outputs
+  outputs: |
+    [OUTPUT]
+        Name            es
+        Match           *
+        Host            ${FLUENT_ELASTICSEARCH_HOST}
+        Port            ${FLUENT_ELASTICSEARCH_PORT}
+        HTTP_User       ${FLUENT_ELASTICSEARCH_USER}
+        HTTP_Passwd     ${FLUENT_ELASTICSEARCH_PASSWORD}
+        Logstash_Format On
+        Replace_Dots    On
+        Retry_Limit     False
+        TLS             On
+        TLS.verify      Off
+
 # helm install fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
 ```
