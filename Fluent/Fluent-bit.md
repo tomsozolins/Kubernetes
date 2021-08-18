@@ -38,8 +38,21 @@ config:
         Retry_Limit     False
         TLS             On
         TLS.verify      Off
-        
+
+## https://docs.fluentbit.io/manual/pipeline/inputs
+inputs: |
+  [INPUT]
+      Name     syslog
+      Parser   syslog-rfc3164
+      Listen   0.0.0.0
+      Port     5140
+      Mode     tcp
+
 ```
+
+
+
+#### Syslog input
 
 ```
 # helm install fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
