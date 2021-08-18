@@ -87,3 +87,9 @@ POST _reindex
 ```
 GET _tasks?actions=*reindex&detailed
 ```
+
+#### cancel reindex task
+
+```
+POST _tasks/node_id:task_id/_cancel
+```
