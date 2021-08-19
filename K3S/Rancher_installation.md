@@ -11,10 +11,14 @@ https://helm.sh/docs/intro/install/
 
 #### Install cert-manager
 
-Install the CustomResourceDefinition resources separately
+##### Install the CustomResourceDefinition resources separately
+```
 # kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
-Create the namespace for cert-manager
+```
+##### Create the namespace for cert-manager
+```
 # kubectl create namespace cert-manager
+```
 
 ##### Add the Jetstack Helm repository
 ```
