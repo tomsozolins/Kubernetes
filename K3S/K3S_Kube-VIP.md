@@ -1,15 +1,20 @@
-K3S installation
-------------
-Prepare OS
+# Prepare OS
+```
 # vi /etc/hostname
 # vi /etc/hosts
 # vi /etc/chrony.conf
 pool <ntp-server-address> iburst prefer
 # systemctl restart chronyd
+```
 
+#### Unable to ssh to remote server fix - comment this line, if exists
+```
 # vi ~/.ssh/authorized_keys
-Remove this line, if exists:
+```
+```
 no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login as the user \"ubuntu\" rather than the user \"root\".';echo;sleep 10"
+```
+
 ----------------------------
 On first master node:
 # curl -sLS https://get.k3sup.dev | sh
@@ -54,20 +59,6 @@ Server:
 Agent:
 # /usr/local/bin/k3s-agent-uninstall.sh
 
----------------
-MetalLB:
-# helm repo add metallb https://metallb.github.io/metallb
-# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-
-# vi values.yaml
-configInline:
-  address-pools:
-   - name: default
-     protocol: layer2
-     addresses:
-     - <X.X.X.X-X.X.X.X>
-     
-# helm install metallb metallb/metallb -f values.yaml
 ---------------
 OLD:
 Kube-vip Cloud Provider installation
