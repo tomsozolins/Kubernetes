@@ -63,7 +63,7 @@ https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 # helm upgrade rancher rancher-stable/rancher --namespace cattle-system
 ```
 
-#### Troubleshoot
+##### Troubleshooting
 ```
 # kubectl -n cattle-system rollout status deploy/rancher
 # kubectl -n cattle-system get deploy rancher
@@ -72,12 +72,13 @@ https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 # kubectl -n cattle-system logs -l app=rancher
 ```
 
-#### Debugging (https://rancher.com/docs/rancher/v2.x/en/troubleshooting/logging/)\
+#### Enable Debugging 
+https://rancher.com/docs/rancher/v2.x/en/troubleshooting/logging/
 ```
 # kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns=name:.metadata.name | while read rancherpod; do kubectl -n cattle-system exec $rancherpod -c rancher -- loglevel --set debug; done
 ```
 
-##### Disable Debug logging
+#### Disable Debugging
 ```
 # kubectl -n cattle-system get pods -l app=rancher --no-headers -o custom-columns=name:.metadata.name | while read rancherpod; do kubectl -n cattle-system exec $rancherpod -c rancher -- loglevel --set info; done
 ```
