@@ -108,7 +108,7 @@ metadata:
 spec:
   ports:
   - port: 5140
-    protocol: "TCP"
+    protocol: TCP
     targetPort: 5140
   selector:
     beat.k8s.elastic.co/name: filebeat-k8s-syslog
