@@ -23,5 +23,5 @@ configInline:
 
 #### Upgrading
 ```
-# helm upgrade metallb metallb/metallb
+# helm upgrade metallb metallb/metallb --namespace metallb-system
 ```
