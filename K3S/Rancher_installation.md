@@ -11,6 +11,7 @@ https://helm.sh/docs/intro/install/
 ```
 
 # Install cert-manager
+https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 ##### Install the CustomResourceDefinition resources separately
 ```
