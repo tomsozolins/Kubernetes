@@ -113,4 +113,4 @@ spec:
   selector:
     beat.k8s.elastic.co/name: filebeat-k8s-syslog
   type: LoadBalancer
-  "externalTrafficPolicy": "Local"
+  externalTrafficPolicy: Local
