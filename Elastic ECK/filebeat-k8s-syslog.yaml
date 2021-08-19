@@ -23,7 +23,7 @@ spec:
               - /var/log/containers/*${data.kubernetes.container.id}.log
     filebeat.inputs:
     - type: syslog
-      format: rfc5424
+      format: auto
       protocol.tcp:
         host: "0.0.0.0:5140"  
     processors:
