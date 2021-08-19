@@ -17,7 +17,7 @@ spec:
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-metricbeat.html
       xpack.monitoring.collection.enabled: true
       xpack.monitoring.elasticsearch.collection.enabled: false
-      # Remote reindex
+      # Allow remote reindex
       reindex.remote.whitelist: "*:9200"
       reindex.ssl.verification_mode: none
     podTemplate:
@@ -36,14 +36,14 @@ spec:
           # specify resource limits and requests
           resources:
             requests:
-              memory: 2Gi
+              memory: 4Gi
               cpu: 0.5
             limits:
-              memory: 2Gi
+              memory: 4Gi
               cpu: 1
           env:
           - name: ES_JAVA_OPTS
-            value: "-Xms1g -Xmx1g"
+            value: "-Xms2g -Xmx2g"
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
