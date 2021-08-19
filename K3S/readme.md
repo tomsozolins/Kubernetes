@@ -72,3 +72,9 @@ https://github.com/alexellis/k3sup
 ```
 # /usr/local/bin/k3s-agent-uninstall.sh
 ```
+
+# Deploy K3S system upgrade controller
+```
+# kubectl apply -f https://raw.githubusercontent.com/rancher/system-upgrade-controller/master/manifests/system-upgrade-controller.yaml
+# kubectl apply -f https://raw.githubusercontent.com/rancher/system-upgrade-controller/master/examples/k3s-upgrade.yaml
+```
