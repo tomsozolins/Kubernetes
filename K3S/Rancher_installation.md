@@ -9,7 +9,7 @@ https://helm.sh/docs/intro/install/
 # export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
 
-#### Install cert-manager
+# Install cert-manager
 
 ##### Install the CustomResourceDefinition resources separately
 ```
@@ -36,10 +36,11 @@ https://helm.sh/docs/intro/install/
 # kubectl get pods --namespace cert-manager
 ```
 
-#### Rancher installation
+# Install Rancher
 https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 ```
 # helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+# helm repo update
 ```
 
 ```
