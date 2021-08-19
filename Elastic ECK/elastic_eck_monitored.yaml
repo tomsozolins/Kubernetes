@@ -17,6 +17,9 @@ spec:
       # https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-metricbeat.html
       xpack.monitoring.collection.enabled: true
       xpack.monitoring.elasticsearch.collection.enabled: false
+      # Remote reindex
+      reindex.remote.whitelist: "*:9200"
+      reindex.ssl.verification_mode: none
     podTemplate:
       metadata:
         labels:
