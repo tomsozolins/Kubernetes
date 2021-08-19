@@ -21,7 +21,7 @@ configInline:
 # helm install metallb metallb/metallb --values metallb-values.yaml --namespace metallb-system --create-namespace
 ```
 
-# Upgrade MetalLB
+## Upgrade MetalLB
 ```
 # helm upgrade metallb metallb/metallb --values metallb-values.yaml --namespace metallb-system
 ```
