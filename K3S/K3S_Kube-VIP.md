@@ -41,7 +41,7 @@ https://github.com/alexellis/k3sup
      server: <VIP-address>
 ```
 
-#### Add master nodes (3 minimum)
+#### Add master nodes (3 min for quorum)
 ```
 # k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root --server --k3s-extra-args="--disable servicelb"
 ```
