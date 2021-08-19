@@ -25,7 +25,7 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm install longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system --create-namespace
 ```
 
-# Upgrading Longhorn
+# Upgrade Longhorn
 ```
 # helm upgrade longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
 # kubectl -n longhorn-system get pod
