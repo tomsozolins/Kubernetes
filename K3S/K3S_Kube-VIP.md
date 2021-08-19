@@ -30,7 +30,7 @@ https://github.com/alexellis/k3sup
 # k3sup install --cluster --user=root --ip <node-ip-address> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
 ```
 
-# Kube-VIP installation
+# Kube-VIP installation for K3S distribution
 ```
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
