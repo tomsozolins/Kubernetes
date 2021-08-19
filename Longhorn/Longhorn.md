@@ -1,4 +1,4 @@
-# Prepare disks
+## Prepare disks
 ```
 # parted /dev/vdX mklabel gpt unit TB mkpart primary 0% 100%
 # mkfs.xfs /dev/vdX1
@@ -7,7 +7,7 @@
 # echo "/dev/vdX1 /mnt/disk1 xfs defaults 1 2" >> /etc/fstab
 ```
 
-# Install Longhorn requirements
+## Install Longhorn requirements
 ```
 # dnf install -y iscsi-initiator-utils
 # systemctl start iscsid
@@ -15,7 +15,7 @@
 # dnf install -y nfs-utils
 ```
 
-# Install Longhorn
+## Install Longhorn
 ```
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm repo add longhorn https://charts.longhorn.io
@@ -25,25 +25,25 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm install longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system --create-namespace
 ```
 
-# Upgrade Longhorn
+## Upgrade Longhorn
 ```
 # helm upgrade longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system
 # kubectl -n longhorn-system get pod
 ```
 
-# Create Storage Class (need to check later, this overrides longhorn storageclass)
+## Create Storage Class (need to check later, this overrides longhorn storageclass)
 ```
 # kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-single-replica.yaml
 
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 ```
 
-# Uninstall Longhorn
+## Uninstall Longhorn
 ```
 # helm uninstall longhorn longhorn/longhorn --namespace longhorn-system
 ```
 
-# Longhorn Prometheus monitoring
+## Longhorn Prometheus monitoring
 https://longhorn.io/docs/1.1.2/monitoring/integrating-with-rancher-monitoring/
 
 ```
