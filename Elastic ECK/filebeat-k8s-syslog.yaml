@@ -21,11 +21,11 @@ spec:
               type: container
               paths:
               - /var/log/containers/*${data.kubernetes.container.id}.log
-    filebeat.inputs:
-    - type: syslog
-    format: auto
-    protocol.tcp:
-      host: "0.0.0.0:5140"
+        inputs:
+        - type: syslog
+        format: auto
+        protocol.tcp:
+          host: "0.0.0.0:5140"  
     processors:
     - add_cloud_metadata: {}
     - add_host_metadata: {}
