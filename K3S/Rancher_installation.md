@@ -7,6 +7,7 @@ https://helm.sh/docs/intro/install/
 # ./get_helm.sh
 
 # export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+# helm ls --all-namespaces
 ```
 
 # Install cert-manager
