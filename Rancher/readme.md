@@ -1,4 +1,6 @@
-# Install Helm 
+# Rancher deployment
+
+## Install Helm 
 https://helm.sh/docs/intro/install/
 
 ```
@@ -10,7 +12,7 @@ https://helm.sh/docs/intro/install/
 # helm ls --all-namespaces
 ```
 
-# Install cert-manager
+## Install cert-manager
 https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 ##### Install the CustomResourceDefinition resources separately
@@ -38,7 +40,7 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 # kubectl get pods --namespace cert-manager
 ```
 
-# Install Rancher
+## Install Rancher
 https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 ```
 # helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
@@ -63,7 +65,7 @@ https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 # helm upgrade rancher rancher-stable/rancher --namespace cattle-system
 ```
 
-# Troubleshooting
+## Troubleshooting
 ```
 # kubectl -n cattle-system rollout status deploy/rancher
 # kubectl -n cattle-system get deploy rancher
