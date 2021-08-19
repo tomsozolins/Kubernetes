@@ -1,4 +1,5 @@
-# Prepare OS
+# K3S cluster deployment
+## Prepare OS
 ```
 # vi /etc/hostname
 # vi /etc/hosts
@@ -20,7 +21,7 @@ comment this line, if exists ->
 no-port-forwarding,no-agent-forwarding,no-X11-forwarding,command="echo 'Please login as the user \"ubuntu\" rather than the user \"root\".';echo;sleep 10"
 ```
 
-# K3S installation with K3SUP
+## K3S installation with K3SUP
 https://github.com/alexellis/k3sup
 
 #### On first master node - install K3SUP
@@ -30,7 +31,7 @@ https://github.com/alexellis/k3sup
 # k3sup install --cluster --user=root --ip <node-ip-address> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
 ```
 
-# Kube-VIP installation for K3S distribution
+## Kube-VIP installation for K3S distribution
 ```
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
@@ -51,7 +52,7 @@ https://github.com/alexellis/k3sup
 # k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root
 ```
 
-# Troubleshooting
+## Troubleshooting
 ```
 # kubectl get all --all-namespaces
 # kubectl get nodes -o wide
@@ -60,7 +61,7 @@ https://github.com/alexellis/k3sup
 # kubectl get endpoints kube-controller-manager --namespace=kube-system -o yaml
 ```
 
-# Uninstall K3S
+## Uninstall K3S
 
 #### master node
 ```
