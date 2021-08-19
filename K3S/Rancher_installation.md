@@ -63,7 +63,7 @@ https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 # helm upgrade rancher rancher-stable/rancher --namespace cattle-system
 ```
 
-##### Troubleshooting
+# Troubleshooting
 ```
 # kubectl -n cattle-system rollout status deploy/rancher
 # kubectl -n cattle-system get deploy rancher
