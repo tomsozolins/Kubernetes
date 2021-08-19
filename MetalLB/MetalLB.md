@@ -18,5 +18,10 @@ configInline:
 
 ```
 # export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-# helm install metallb metallb/metallb --values metallb-values.yaml
+# helm install metallb metallb/metallb --values metallb-values.yaml --namespace metallb-system --create-namespace
+```
+
+#### Upgrading
+```
+# helm upgrade metallb metallb/metallb
 ```
