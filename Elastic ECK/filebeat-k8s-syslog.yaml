@@ -25,7 +25,7 @@ spec:
     - type: syslog
       format: auto
       protocol.tcp:
-        host: "localhost:5140"  
+        host: "0.0.0.0:5140"  
     processors:
     - add_cloud_metadata: {}
     - add_host_metadata: {}
