@@ -1,0 +1,44 @@
+PUT _ingest/pipeline/insight_pipeline
+{
+    "processors" : [
+      {
+        "csv" : {
+          "field" : "message",
+          "target_fields" : [
+            "LocalTime",
+            "AccessPoint",
+            "Area",
+            "CardNo",
+            "Details",
+            "Direction",
+            "Method",
+            "Source",
+            "User"
+          ],
+          "trim" : false
+        }
+      },
+      {
+        "drop" : {
+          "if" : """ctx.message == '"Local time","Source","Message text","Category"'"""
+        }
+      },
+      {
+        "date" : {
+          "field" : "LocalTime",
+          "formats" : [
+            "dd/MM/yyyy HH:mm:ss"
+          ],
+          "timezone" : "Europe/Riga"
+        }
+      }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error.message",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}
