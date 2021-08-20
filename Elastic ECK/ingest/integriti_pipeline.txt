@@ -1,0 +1,41 @@
+PUT _ingest/pipeline/integriti_pipeline
+{
+    "processors" : [
+      {
+        "csv" : {
+          "field" : "message",
+          "target_fields" : [
+            "LocalTime",
+            "Source",
+            "MessageText",
+            "Category",
+            "User",
+            "Entity"
+          ],
+          "trim" : false
+        }
+      },
+      {
+        "drop" : {
+          "if" : """ctx.message == '"Local time","Source","Message text","Category","User","Entity"'"""
+        }
+      },
+      {
+        "date" : {
+          "field" : "LocalTime",
+          "formats" : [
+            "dd.MM.yyyy HH:mm:ss"
+          ],
+          "timezone" : "Europe/Riga"
+        }
+      }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error.message",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+ }
