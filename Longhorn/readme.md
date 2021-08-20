@@ -33,11 +33,9 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # kubectl -n longhorn-system get pod
 ```
 
-## Create Storage Class (need to check later, this overrides longhorn storageclass)
+## Create custom storage class
 ```
 # kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-storageclass.yaml
-
-# kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 ```
 
 ## Uninstall Longhorn
