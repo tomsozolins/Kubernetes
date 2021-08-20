@@ -18,6 +18,11 @@ Monitor the operator logs
 # helm upgrade elastic-operator elastic/eck-operator -n elastic-system
 ```
 
+#### Uninstall ECK operator
+```
+# helm uninstall elastic-operator elastic/eck-operator -n elastic-system
+```
+
 Create Kibana saved objects encrypted key:
 ```
 # kubectl create secret generic kibana-saved-objects-encrypted-key --from-literal=xpack.encryptedSavedObjects.encryptionKey="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)"
