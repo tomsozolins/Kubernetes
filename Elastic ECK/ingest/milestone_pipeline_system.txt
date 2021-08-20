@@ -1,0 +1,43 @@
+PUT _ingest/pipeline/milestone_pipeline_system
+{
+    "processors" : [
+      {
+        "csv" : {
+          "field" : "message",
+          "target_fields" : [
+            "LogLevel",
+            "LocalTime",
+            "MessageText",
+            "Category",
+            "SourceType",
+            "SourceName",
+            "EventType"
+          ],
+          "trim" : false,
+          "ignore_missing" : true
+        }
+      },
+      {
+        "drop" : {
+          "if" : "ctx.MessageText == 'Message text'"
+        }
+      },
+      {
+        "date" : {
+          "field" : "LocalTime",
+          "formats" : [
+            "dd.MM.yyyy HH:mm:ss"
+          ],
+          "timezone" : "Europe/Riga"
+        }
+      }
+    ],
+    "on_failure" : [
+      {
+        "set" : {
+          "field" : "error.message",
+          "value" : "{{ _ingest.on_failure_message }}"
+        }
+      }
+    ]
+}
