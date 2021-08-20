@@ -35,7 +35,7 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 ## Create Storage Class (need to check later, this overrides longhorn storageclass)
 ```
-# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-single-replica.yaml
+# kubectl apply -f https://raw.githubusercontent.com/tomsozolins/Kubernetes/master/Longhorn/longhorn-storageclass.yaml
 
 # kubectl get configmap longhorn-storageclass -n longhorn-system -o json
 ```
