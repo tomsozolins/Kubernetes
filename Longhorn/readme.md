@@ -15,6 +15,8 @@
 # systemctl start iscsid
 # systemctl enable iscsid
 # dnf install -y nfs-utils
+# dnf install -y sysstat
+# iostat -xm 1 |grep -v dm
 ```
 
 ## Install Longhorn
