@@ -12,7 +12,11 @@ Monitor the operator logs
 ```
 // # kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
 ```
----
+
+#### Upgrade ECK operator
+```
+# helm upgrade elastic-operator elastic/eck-operator -n elastic-system
+```
 
 Create Kibana saved objects encrypted key:
 ```
