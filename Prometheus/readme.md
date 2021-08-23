@@ -4,4 +4,4 @@
 ```
 
 ##### For rancher monitoring edit prometheus-external-monitoring.yaml
-##### namespace to 'cattle-monitoring-system'
+##### change namespace to cattle-monitoring-system
