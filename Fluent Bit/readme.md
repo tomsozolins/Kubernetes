@@ -44,7 +44,7 @@ config:
 inputs: |
   [INPUT]
       Name     syslog
-      Parser   syslog-rfc3164
+      Parser   syslog-rfc5424
       Listen   0.0.0.0
       Port     5140
       Mode     tcp
