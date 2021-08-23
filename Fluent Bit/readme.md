@@ -53,8 +53,12 @@ inputs: |
 
 
 
-#### Syslog input
-
+#### Installation
 ```
 # helm install fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
+```
+
+#### Upgrading
+```
+# helm upgrade fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
 ```
