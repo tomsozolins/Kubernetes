@@ -1,4 +1,4 @@
-#### External monitoring
+### External monitoring
 ```
-# kubectl apply -f external_monitoring.yaml
+# kubectl apply -f prometheus-external-monitoring.yaml
 ```
