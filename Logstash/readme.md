@@ -41,3 +41,26 @@ logstashConfig: {}
     http.host: "0.0.0.0"
     path.config: /usr/share/logstash/pipeline
 ```
+```
+logstashPipeline: {}
+   logstash.conf: |
+    input {
+      syslog {
+        id => "logstash-syslog"
+        host => "0.0.0.0"
+        port => 5140
+      }
+    }
+    filter {
+    }
+    output {
+      elasticsearch {
+        hosts => [ "${ES_HOSTS}" ]
+        user => "${ES_USER}"
+        password => "${ES_PASSWORD}"
+        cacert => '/etc/logstash/certificates/ca.crt'
+      }
+      stdout { codec => rubydebug }
+    }
+
+```
