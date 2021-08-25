@@ -19,52 +19,17 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 ```
 replicas: 3
 ```
+
 ```
-service: {}
-  annotations: {}
-  type: LoadBalancer
-  externalTrafficPolicy: Local
-  loadBalancerIP: ""
-  selector:
-    app: logstash
-  ports:
-    - name: syslog
-      port: 5140
-      protocol: TCP
-      targetPort: 5140
-    - name: http
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
-```
-```
-extraEnvs: []
-  - name: ES_HOSTS
-    value: "https://elasticsearch-es-http:9200"
-  - name: ES_USER
-      value: "elastic"
-  - name: ES_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: elasticsearch-es-elastic-user
-        key: elastic
-```
-```
-# Custom ports to add to logstash
-extraPorts:
-  []
-  - name: syslog
-     containerPort: 5140
-```
-```
-logstashConfig: {}
+logstashConfig:
   logstash.yml: |
     http.host: "0.0.0.0"
     path.config: /usr/share/logstash/pipeline
 ```
+
 ```
-logstashPipeline: {}
-   logstash.conf: |
+logstashPipeline:
+  logstash.conf: |
     input {
       syslog {
         id => "logstash-syslog"
@@ -83,7 +48,45 @@ logstashPipeline: {}
       }
       stdout { codec => rubydebug }
     }
+```
 
+```
+extraEnvs:
+  - name: ES_HOSTS
+    value: "https://elasticsearch-es-http:9200"
+  - name: ES_USER
+    value: "elastic"
+  - name: ES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-es-elastic-user
+        key: elastic
+```
+
+```
+# Custom ports to add to logstash
+extraPorts:
+  - name: syslog
+    containerPort: 5140
+```
+
+```
+service:
+  annotations: {}
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  loadBalancerIP: ""
+  selector:
+    app: logstash
+  ports:
+    - name: syslog
+      port: 5140
+      protocol: TCP
+      targetPort: 5140
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
 ```
 
 #### Installation
@@ -98,5 +101,5 @@ logstashPipeline: {}
 
 #### Uninstall
 ```
-# helm uninstall logstash elastic/logstash
+# helm uninstall logstash
 ```
