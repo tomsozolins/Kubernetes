@@ -11,7 +11,6 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 ```
 # helm repo add elastic https://helm.elastic.co
 # helm show values elastic/logstash > logstash-values.yaml
-# helm install logstash elastic/logstash --values logstash-values.yaml
 ```
 
 ```
@@ -85,4 +84,14 @@ logstashPipeline: {}
       stdout { codec => rubydebug }
     }
 
+```
+
+#### Installation
+```
+# helm install logstash elastic/logstash --values logstash-values.yaml
+```
+
+#### Upgrade
+```
+# helm upgrade logstash elastic/logstash --values logstash-values.yaml
 ```
