@@ -15,6 +15,9 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 ```
 
 ```
+# vi logstash-values.yaml
+```
+```
 service: {}
   annotations: {}
   type: LoadBalancer
