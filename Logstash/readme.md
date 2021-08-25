@@ -32,3 +32,9 @@ service: {}
       protocol: TCP
       targetPort: 8080
 ```
+```
+logstashConfig: {}
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+```
