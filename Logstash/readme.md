@@ -71,6 +71,36 @@ extraPorts:
 ```
 
 ```
+extraVolumes: |
+  - name: config-volume
+    configMap:
+      name: logstash-configmap
+      items:
+        - key: logstash.yml
+          path: logstash.yml
+  - name: logstash-pipeline-volume
+    configMap:
+      name: logstash-configmap
+      items:
+        - key: logstash.conf
+          path: logstash.conf
+  - name: cert-ca
+    secret:
+      secretName: elasticsearch-es-http-certs-public
+```
+
+```
+extraVolumeMounts: |
+  - name: config-volume
+    mountPath: /usr/share/logstash/config
+  - name: logstash-pipeline-volume
+    mountPath: /usr/share/logstash/pipeline
+  - name: cert-ca
+    mountPath: "/etc/logstash/certificates"
+    readOnly: true
+```
+
+```
 service:
   annotations: {}
   type: LoadBalancer
