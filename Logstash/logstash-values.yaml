@@ -6,16 +6,15 @@ replicas: 3
 #
 # Note that when overriding logstash.yml, `http.host: 0.0.0.0` should always be included
 # to make default probes work.
-logstashConfig: {}
+logstashConfig:
   logstash.yml: |
-    key:
-      http.host: "0.0.0.0"
-      path.config: /usr/share/logstash/pipeline
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
 
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
-logstashPipeline: {}
-   logstash.conf: |
+logstashPipeline:
+  logstash.conf: |
     input {
       syslog {
         id => "logstash-syslog"
@@ -35,15 +34,6 @@ logstashPipeline: {}
       stdout { codec => rubydebug }
     }
 
-#  logstash.conf: |
-#    input {
-#      exec {
-#        command => "uptime"
-#        interval => 30
-#      }
-#    }
-#    output { stdout { } }
-
 # Allows you to add any pattern files in your custom pattern dir
 logstashPatternDir: "/usr/share/logstash/patterns/"
 logstashPattern: {}
@@ -53,11 +43,11 @@ logstashPattern: {}
 # Extra environment variables to append to this nodeGroup
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
-extraEnvs: []
+extraEnvs:
   - name: ES_HOSTS
     value: "https://elasticsearch-es-http:9200"
   - name: ES_USER
-      value: "elastic"
+    value: "elastic"
   - name: ES_PASSWORD
     valueFrom:
       secretKeyRef:
@@ -205,9 +195,8 @@ httpPort: 9600
 
 # Custom ports to add to logstash
 extraPorts:
-  []
   - name: syslog
-     containerPort: 5140
+    containerPort: 5140
 
 updateStrategy: RollingUpdate
 
@@ -286,7 +275,7 @@ lifecycle:
   #   exec:
   #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 
-service: {}
+service:
   annotations: {}
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -302,6 +291,20 @@ service: {}
       port: 8080
       protocol: TCP
       targetPort: 8080
+
+#service: {}
+#  annotations: {}
+#  type: ClusterIP
+#  loadBalancerIP: ""
+#  ports:
+#    - name: beats
+#      port: 5044
+#      protocol: TCP
+#      targetPort: 5044
+#    - name: http
+#      port: 8080
+#      protocol: TCP
+#      targetPort: 8080
 
 ingress:
   enabled: false
