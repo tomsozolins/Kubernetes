@@ -18,7 +18,10 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 service: {}
   annotations: {}
   type: LoadBalancer
+  externalTrafficPolicy: Local
   loadBalancerIP: ""
+  selector:
+    app: logstash
   ports:
     - name: syslog
       port: 5140
@@ -28,5 +31,4 @@ service: {}
       port: 8080
       protocol: TCP
       targetPort: 8080
-
 ```
