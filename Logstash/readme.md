@@ -122,6 +122,7 @@ service:
 #### Installation
 ```
 # helm install logstash elastic/logstash --values logstash-values.yaml
+# kubectl get pods --namespace=default -l app=logstash-logstash -w
 ```
 
 #### Upgrade
