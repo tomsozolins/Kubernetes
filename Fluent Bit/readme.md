@@ -61,7 +61,7 @@ inputs: |
 # helm upgrade fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
 ```
 
-#### Expose Fluent Bit to LoadBalancer service
+#### Expose Fluent Bit as LoadBalancer service
 ```
 # vi fluent-bit-syslog.yaml
 ```
