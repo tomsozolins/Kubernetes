@@ -64,6 +64,8 @@ inputs: |
 #### Expose Fluent Bit to LoadBalancer service
 ```
 # vi fluent-bit-syslog.yaml
+```
+
 ``` 
 apiVersion: v1
 kind: Service
@@ -79,6 +81,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
 ```
+
 ```
 # kubectl apply -f fluent-bit-syslog.yaml
 ```
