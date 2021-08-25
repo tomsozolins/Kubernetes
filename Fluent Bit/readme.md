@@ -43,11 +43,11 @@ config:
 ## https://docs.fluentbit.io/manual/pipeline/inputs
 inputs: |
   [INPUT]
-      Name     syslog
-      Parser   syslog-rfc5424
-      Listen   0.0.0.0
-      Port     5140
-      Mode     tcp
+     Name     syslog
+     Parser   syslog-rfc5424
+     Listen   0.0.0.0
+     Port     5140
+     Mode     tcp
 
 ```
 
