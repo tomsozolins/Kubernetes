@@ -63,7 +63,7 @@ inputs: |
 
 #### Expose Fluent Bit as LoadBalancer service
 ```
-# vi fluent-bit-syslog.yaml
+# vi fluent-bit-loadbalancer.yaml
 ```
 
 ``` 
@@ -84,5 +84,5 @@ spec:
 ```
 
 ```
-# kubectl apply -f fluent-bit-syslog.yaml
+# kubectl apply -f fluent-bit-loadbalancer.yaml
 ```
