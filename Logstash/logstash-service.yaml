@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: logstash
+  name: logstash
+spec:
+  ports:
+  - name: "25826"
+    port: 25826
+    targetPort: 25826
+  - name: "5140"
+    port: 5140
+    targetPort: 5140
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: logstash
+status:
+  loadBalancer: {}
