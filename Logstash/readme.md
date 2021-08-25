@@ -18,6 +18,9 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 # vi logstash-values.yaml
 ```
 ```
+replicas: 3
+```
+```
 service: {}
   annotations: {}
   type: LoadBalancer
@@ -34,6 +37,25 @@ service: {}
       port: 8080
       protocol: TCP
       targetPort: 8080
+```
+```
+extraEnvs: []
+  - name: ES_HOSTS
+    value: "https://elasticsearch-es-http:9200"
+  - name: ES_USER
+      value: "elastic"
+  - name: ES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-es-elastic-user
+        key: elastic
+```
+```
+# Custom ports to add to logstash
+extraPorts:
+  []
+  - name: syslog
+     containerPort: 5140
 ```
 ```
 logstashConfig: {}
