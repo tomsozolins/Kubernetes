@@ -51,8 +51,6 @@ inputs: |
 
 ```
 
-
-
 #### Installation
 ```
 # helm install fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
@@ -61,4 +59,26 @@ inputs: |
 #### Upgrading
 ```
 # helm upgrade fluent-bit fluent/fluent-bit --values fluentbit-values.yaml
+```
+
+#### Expose Fluent Bit to LoadBalancer service
+```
+# vi fluent-bit-syslog.yaml
+``` 
+apiVersion: v1
+kind: Service
+metadata:
+  name: fluent-bit-loadbalancer
+spec:
+  ports:
+  - port: 5140
+    protocol: TCP
+    targetPort: 5140
+  selector:
+    app.kubernetes.io/name: fluent-bit
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+```
+```
+# kubectl apply -f fluent-bit-syslog.yaml
 ```
