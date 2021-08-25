@@ -77,6 +77,7 @@ spec:
     protocol: TCP
     targetPort: 5140
   selector:
+    app.kubernetes.io/instance: fluent-bit
     app.kubernetes.io/name: fluent-bit
   type: LoadBalancer
   externalTrafficPolicy: Local
