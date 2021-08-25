@@ -95,3 +95,8 @@ logstashPipeline: {}
 ```
 # helm upgrade logstash elastic/logstash --values logstash-values.yaml
 ```
+
+#### Uninstall
+```
+# helm uninstall logstash elastic/logstash
+```
