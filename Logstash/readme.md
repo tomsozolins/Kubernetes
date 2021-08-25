@@ -113,8 +113,11 @@ service:
 #### Note about externalTrafficPolicy
 ```
 Currently externalTrafficPolicy: Local setting does not seem to work when installing with Helm. 
-Need to create LoadBalancer service externally. Edit logstash-service.yaml:
+https://github.com/elastic/helm-charts/pull/1327
+
+Need to create LoadBalancer service externally. Edit logstash-service.yaml.
 app=logstash-logstash
+
 # kubectl apply -f logstash-service.yaml
 ```
 #### Upgrade
