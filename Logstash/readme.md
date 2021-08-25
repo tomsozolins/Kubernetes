@@ -13,3 +13,20 @@ https://github.com/elastic/helm-charts/tree/master/logstash
 # helm show values elastic/logstash > logstash-values.yaml
 # helm install logstash elastic/logstash --values logstash-values.yaml
 ```
+
+```
+service: {}
+  annotations: {}
+  type: LoadBalancer
+  loadBalancerIP: ""
+  ports:
+    - name: syslog
+      port: 5140
+      protocol: TCP
+      targetPort: 5140
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+
+```
