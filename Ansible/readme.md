@@ -11,3 +11,6 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 # add-apt-repository --yes --update ppa:ansible/ansible
 # apt install ansible
 ```
+```
+# cd /etc/ansible/
+```
