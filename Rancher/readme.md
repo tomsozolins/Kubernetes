@@ -44,7 +44,7 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 ##### Upgrade Cert Manager
 
 ```
-# helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager
+# helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --version v1.5.3
 ```
 
 ## Install Rancher
