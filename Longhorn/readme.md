@@ -27,6 +27,7 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm show values longhorn/longhorn > longhorn-values.yaml
 ```
 #### In case default storage class needs to be changed
+```
 persistence:
   defaultClass: true
   defaultClassReplicaCount: 1
