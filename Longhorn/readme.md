@@ -25,7 +25,16 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 # helm repo add longhorn https://charts.longhorn.io
 # helm repo update
 # helm show values longhorn/longhorn > longhorn-values.yaml
+```
+#### In case default storage class needs to be changed
+persistence:
+  defaultClass: true
+  defaultClassReplicaCount: 1
+  
+defaultDataLocality: "best-effort"
+```
 
+```
 # helm install longhorn longhorn/longhorn --values longhorn-values.yaml --namespace longhorn-system --create-namespace
 ```
 
