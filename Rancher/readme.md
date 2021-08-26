@@ -30,14 +30,21 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 # helm repo update
 ```
 
+##### Install Cert Manager
 ```
 # helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
-  --version v1.0.4
+  --version v1.5.3
 ```
 ```
 # kubectl get pods --namespace cert-manager
+```
+
+##### Upgrade Cert Manager
+
+```
+# helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager
 ```
 
 ## Install Rancher
