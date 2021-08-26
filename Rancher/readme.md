@@ -17,7 +17,7 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 ##### Install the CustomResourceDefinition resources separately
 ```
-# kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+# kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
 ```
 ##### Create the namespace for cert-manager
 ```
