@@ -45,4 +45,4 @@ spec:
       storage: 8Gi
     limits:
       storage: 50Gi
-  postgres_storage_class: longhorn-r3
+  postgres_storage_class: longhorn-replica-3
