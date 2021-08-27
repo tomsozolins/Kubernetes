@@ -1,13 +1,24 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ansible
+  name: ansible-deployment
   labels:
     app: ansible
 spec:
-  containers:
-  - name: ubuntu
-    image: ubuntu:latest
-    command: ["/bin/sleep", "3650d"]
-    imagePullPolicy: IfNotPresent
-  restartPolicy: Always
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ansible
+  template:
+    metadata:
+      labels:
+        app: ansible
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:latest
+        command: ["/bin/sleep", "3650d"]
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 22
+      restartPolicy: Always
