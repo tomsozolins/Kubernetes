@@ -10,6 +10,18 @@ persistence:
   enabled: true
   storageClass: myOwnStorageClass
 ```
+```
+postgresql:
+  global:
+    postgresql:
+      postgresqlDatabase: gitea
+      postgresqlUsername: gitea
+      postgresqlPassword: gitea
+      servicePort: 5432
+  persistence:
+    size: 10Gi
+    storageClass: myOwnStorageClass
+```
 
 #### Deploy Gitea
 ```
