@@ -5,5 +5,9 @@ https://github.com/ansible/awx-operator/releases
 ```
 # kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/<TAG>/deploy/awx-operator.yaml
 ```
-
+#### Deploy AWX
+```
+# kubectl apply -f awx.yaml
+# kubectl get secret awx-admin-password -o jsonpath="{.data.password}" | base64 --decode ; echo
+```
 #### 
