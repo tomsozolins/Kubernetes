@@ -26,4 +26,5 @@ postgresql:
 #### Deploy Gitea
 ```
 # helm install gitea gitea-charts/gitea --values gitea-values.yaml
+# kubectl --namespace default port-forward svc/gitea-http 3000:3000
 ```
