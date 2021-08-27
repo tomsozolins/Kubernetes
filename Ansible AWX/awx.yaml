@@ -28,5 +28,5 @@ spec:
       cpu: 1000m
       memory: 2Gi
   projects_persistence: true
-  projects_storage_class: longhorn-r3
+  projects_storage_class: longhorn-replica-3
   projects_storage_size: 20Gi
