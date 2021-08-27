@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ansible-deployment
+  name: ansible
   labels:
     app: ansible
 spec:
