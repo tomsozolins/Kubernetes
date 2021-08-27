@@ -6,24 +6,6 @@ spec:
   service_type: LoadBalancer
   loadbalancer_protocol: https
   loadbalancer_port: 443
-  # persistent config
-  projects_persistence: true
-  projects_storage_class: longhorn-replica-3
-  projects_storage_size: 20Gi
-  # managed database
-  postgres_resource_requirements:
-    requests:
-      cpu: 500m
-      memory: 2Gi
-    limits:
-      cpu: 1
-      memory: 4Gi
-  postgres_storage_requirements:
-    requests:
-      storage: 8Gi
-    limits:
-      storage: 50Gi
-  postgres_storage_class: longhorn-r3
   # resource limits
   web_resource_requirements:
     requests:
@@ -46,3 +28,21 @@ spec:
     limits:
       cpu: 1000m
       memory: 2Gi
+  # persistent config
+  projects_persistence: true
+  projects_storage_class: longhorn-replica-3
+  projects_storage_size: 20Gi
+  # managed database
+  postgres_resource_requirements:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 1
+      memory: 4Gi
+  postgres_storage_requirements:
+    requests:
+      storage: 8Gi
+    limits:
+      storage: 50Gi
+  postgres_storage_class: longhorn-r3
