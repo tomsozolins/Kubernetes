@@ -6,6 +6,11 @@
 ```
 #### Modify gitea-values.yaml
 ```
+service:
+  http:
+    type: LoadBalancer
+```
+```
 persistence:
   enabled: true
   storageClass: myOwnStorageClass
