@@ -13,7 +13,13 @@ service:
 ```
 persistence:
   enabled: true
-  storageClass: myOwnStorageClass
+  # existingClaim:
+  size: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  labels: {}
+  annotations: {}
+  storageClass: longhorn-replica-3
 ```
 ```
 postgresql:
