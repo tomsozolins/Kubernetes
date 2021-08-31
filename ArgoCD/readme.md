@@ -10,7 +10,8 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 
 #### HA
 https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/overview/
+https://github.com/argoproj/argo-cd/releases
 ```
-# kubectl create namespace argocd
-# kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/<version>/manifests/ha/install.yaml
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.1.1/manifests/ha/install.yaml
 ```
