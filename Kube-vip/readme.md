@@ -8,5 +8,7 @@ helm show values kube-vip/kube-vip > kube-vip-values.yaml
 ```
 
 ```
-
+config:
+  vip_interface: "ethX"
+  vip_address: "X.X.X.X"
 ```
