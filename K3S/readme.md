@@ -41,7 +41,7 @@ https://github.com/alexellis/k3sup
 
 #### Add worker nodes
 ```
-# k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root
+# k3sup join --ip=<node-ip-address> --server-ip=<first-node-ip> --user=root --server-user=root
 ```
 
 ## Troubleshooting
