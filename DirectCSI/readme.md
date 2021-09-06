@@ -10,3 +10,8 @@ kubectl direct-csi drives ls
 kubectl direct-csi drives format --drives /dev/vdb --nodes kube-node1,kube-node2
 # 'direct-csi-min-io' can now be specified as the storageclass in PodSpec.VolumeClaimTemplate
 ```
+
+## Verify installation 
+```
+kubectl direct-csi info
+```
