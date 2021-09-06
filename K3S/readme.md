@@ -36,7 +36,7 @@ https://github.com/alexellis/k3sup
 
 #### Add rest of the master nodes (3 nodes minimum for quorum)
 ```
-# k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root --server --k3s-extra-args="--disable servicelb"
+# k3sup join --ip=<node-ip-address> --server-ip=<first-node-ip> --user=root --server-user=root --server --k3s-extra-args="--disable servicelb"
 ```
 
 #### Add worker nodes
