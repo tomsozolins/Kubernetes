@@ -39,14 +39,16 @@ https://artifacthub.io/packages/helm/cert-manager/cert-manager
 https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 ```
 # helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+OR
+# helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
 # helm repo update
 ```
 
 ```
-# helm install rancher rancher-stable/rancher \
+# helm install rancher rancher-latest/rancher \
   --namespace cattle-system \
   --set hostname=rancher \
-  --set replicas=3 \ 
+  --set replicas=3 \
   --create-namespace
 ```
 
