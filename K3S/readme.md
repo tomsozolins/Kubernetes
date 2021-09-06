@@ -31,18 +31,10 @@ https://github.com/alexellis/k3sup
 # k3sup install --cluster --user=root --ip <node-ip-address> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
 ```
 
-## Kube-VIP installation for K3S distribution
-```
-# export VIP=x.x.x.x
-# export INTERFACE=ethx
-# curl -s https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
-# curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
-# vi /etc/rancher/k3s/k3s.yaml
-- cluster:
-     server: <VIP-address>
-```
+## Install Helm
+## Install Kube-VIP with helm
 
-#### Add master nodes (3 min for quorum)
+#### Add rest of the master nodes (3 nodes minimum for quorum)
 ```
 # k3sup join --ip=<node-ip-address> --server-ip=<VIP-address> --user=root --server-user=root --server --k3s-extra-args="--disable servicelb"
 ```
