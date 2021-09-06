@@ -52,9 +52,13 @@ OR
   --create-namespace
 ```
 
+#### Get admin password
+```
+kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{"\n"}}'
+```
 #### Get ingress address
 ```
-# kubectl get ingress -n cattle-system
+kubectl get ingress -n cattle-system
 ```
 
 #### Upgrading rancher
