@@ -13,5 +13,6 @@ kubectl direct-csi drives format --drives /dev/vdb --nodes kube-node1,kube-node2
 
 ## Verify installation 
 ```
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl direct-csi info
 ```
