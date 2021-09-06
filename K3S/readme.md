@@ -28,7 +28,7 @@ https://github.com/alexellis/k3sup
 ```
 # curl -sLS https://get.k3sup.dev | sh
 
-# k3sup install --cluster --user=root --ip <node-ip-address> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
+# k3sup install --cluster --user=root --ip <first-node-ip> --tls-san <VIP-address> --k3s-extra-args="--disable servicelb"
 ```
 
 ## Install Helm
