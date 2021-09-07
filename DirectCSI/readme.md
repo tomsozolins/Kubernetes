@@ -11,6 +11,14 @@ kubectl direct-csi drives format --drives /dev/vdb --nodes kube-node1,kube-node2
 # 'direct-csi-min-io' can now be specified as the storageclass in PodSpec.VolumeClaimTemplate
 ```
 
+## Add environment variables
+```
+vi ~/.bash_profile
+```
+```
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+```
+
 ## Verify installation 
 ```
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
