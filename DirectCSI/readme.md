@@ -1,7 +1,7 @@
 ## Install Krew
 https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 
-## Install Direct CSI
+## Install Direct-CSI
 ```
 kubectl krew install direct-csi
 kubectl direct-csi install --crd
