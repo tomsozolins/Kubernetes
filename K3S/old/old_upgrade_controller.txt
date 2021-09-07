@@ -1,6 +1,6 @@
-# kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.3/system-upgrade-controller.yaml
+# kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.7.5/system-upgrade-controller.yaml
 
-# vi /var/lib/rancher/k3s/server/manifests/system-upgrade-plans.yaml
+# vi system-upgrade-plans.yaml
 
 # Server plan
 apiVersion: upgrade.cattle.io/v1
