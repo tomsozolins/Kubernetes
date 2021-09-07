@@ -32,3 +32,9 @@ kubectl krew upgrade direct-csi
 kubectl direct-csi install
 kubectl direct-csi info
 ```
+
+## Check IO stats
+```
+dnf install sysstat -y
+iostat -xm 1 |grep -v dm
+```
