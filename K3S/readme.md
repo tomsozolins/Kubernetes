@@ -14,6 +14,15 @@ pool <ntp-server-address> iburst prefer
 # chmod 400 ~/.ssh/id_rsa
 ```
 
+#### Add env vars
+```
+vi ~/.bash_profile
+```
+```
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+```
+
 #### Unable to ssh to remote server fix
 ```
 # vi ~/.ssh/authorized_keys
