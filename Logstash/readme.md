@@ -45,6 +45,7 @@ logstashPipeline:
         user => "${ES_USER}"
         password => "${ES_PASSWORD}"
         cacert => '/etc/logstash/certificates/ca.crt'
+        data_stream => "true"
       }
       stdout { codec => rubydebug }
     }
