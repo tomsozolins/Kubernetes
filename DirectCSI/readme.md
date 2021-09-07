@@ -16,3 +16,11 @@ kubectl direct-csi drives format --drives /dev/vdb --nodes kube-node1,kube-node2
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl direct-csi info
 ```
+
+## Upgrading Direct-CSI
+```
+kubectl direct-csi uninstall
+kubectl krew upgrade direct-csi
+kubectl direct-csi install
+kubectl direct-csi info
+```
