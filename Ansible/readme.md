@@ -15,3 +15,27 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 ```
 # cd /etc/ansible/
 ```
+
+#### Modify hosts file
+```
+vi /etc/ansible/hosts
+```
+#### Create example playbook
+```
+vi /etc/ansible/playbook_demo.yaml
+```
+```
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: "update hostnames"
+    hostname:
+      name: "{{ new_hostname }}"
+
+```
+
+#### Run playbook
+```
+ansible-playbook playbook_demo.yaml
+```
