@@ -26,17 +26,23 @@ example-group:
 ```
 #### Example playbook
 ```
-vi /etc/ansible/playbook_demo.yaml
+vi /etc/ansible/playbook.yaml
 ```
 ```
 ---
-- hosts: all
-  become: yes
-  tasks:
-  - name: "update hostnames"
-    hostname:
-      name: "{{ new_hostname }}"
+- name: Zabbix agent2 update
+  hosts: flexstor
+  remote_user: root
 
+  tasks:
+  - name: Ensure zabbix-agent2 is at the latest version
+    ansible.builtin.yum:
+      name: zabbix-agent2
+      state: latest
+  - name: Ensure that zabbix-agent2 is started
+    ansible.builtin.service:
+      name: zabbix-agent2
+      state: started
 ```
 
 #### Run playbook
