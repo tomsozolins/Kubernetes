@@ -1,4 +1,7 @@
 centos_servers:
+  vars:
+    ansible_user: root
+    ansible_password: "secret-password"
   hosts:
     example-hostname1:
       ansible_host: X.X.X.X
@@ -8,7 +11,7 @@ centos_servers:
 windows_servers:
   vars:
     ansible_user: user@DOMAIN.COM
-    ansible_password: "password"
+    ansible_password: "secret-password"
     ansible_connection: winrm
     ansible_winrm_transport: kerberos
     ansible_winrm_server_cert_validation: ignore
