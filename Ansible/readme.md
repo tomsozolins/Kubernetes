@@ -80,3 +80,9 @@ ansible-playbook playbook_demo.yaml
 ```
 ansible -m ping all --ask-pass
 ```
+
+#### Windows package install module
+https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_package_module.html
+```
+ansible-galaxy collection install ansible.windows
+```
