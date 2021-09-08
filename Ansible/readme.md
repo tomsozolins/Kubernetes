@@ -84,6 +84,8 @@ ansible-playbook playbook_demo.yaml
 ansible -m ping all --ask-pass
 ```
 
+#### Setup windows host
+**https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html#winrm-setup**
 #### Windows package install module
 https://docs.ansible.com/ansible/latest/collections/ansible/windows/win_package_module.html
 ```
