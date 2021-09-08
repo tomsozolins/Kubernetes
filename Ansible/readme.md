@@ -16,7 +16,7 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 # cd /etc/ansible/
 ```
 
-#### Inventory example
+#### Build inventory
 ```
 vi /etc/ansible/hosts
 ```
@@ -26,7 +26,7 @@ example-group:
     example-hostname:
       ansible_host: X.X.X.X
 ```
-#### Create example playbook
+#### Example playbook
 ```
 vi /etc/ansible/playbook_demo.yaml
 ```
