@@ -1,5 +1,5 @@
 ---
-- name: Zabbix agent2 update Windows
+- name: Zabbix agent2 update on Windows
   hosts: windows_servers
   tasks:
   - name: Download the Zabbix-agent2 installer
