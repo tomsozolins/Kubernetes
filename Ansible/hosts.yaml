@@ -1,0 +1,17 @@
+centos_servers:
+  hosts:
+    example-hostname1:
+      ansible_host: X.X.X.X
+    example-hostname2:
+      ansible_host: X.X.X.X
+
+windows_servers:
+  vars:
+    ansible_user: user@DOMAIN.COM
+    ansible_password: "password"
+    ansible_connection: winrm
+    ansible_winrm_transport: kerberos
+    ansible_winrm_server_cert_validation: ignore
+  hosts:
+    example-hostname1:
+      ansible_host: X.X.X.X
