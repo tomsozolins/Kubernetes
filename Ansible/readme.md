@@ -45,6 +45,15 @@ vi /etc/ansible/playbook.yaml
       state: started
 ```
 
+#### Disable strict key checking
+```
+vi /etc/ansible/ansible.cfg
+```
+```
+[defaults]
+host_key_checking = False
+```
+
 #### Run playbook
 ```
 ansible-playbook playbook_demo.yaml
