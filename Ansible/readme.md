@@ -16,9 +16,15 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 # cd /etc/ansible/
 ```
 
-#### Modify hosts file
+#### Inventory example
 ```
 vi /etc/ansible/hosts
+```
+```
+example-group:
+  hosts:
+    example-hostname:
+      ansible_host: X.X.X.X
 ```
 #### Create example playbook
 ```
