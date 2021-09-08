@@ -54,7 +54,7 @@ vi /etc/ansible/playbook.yaml
     state: started
   become: yes
 ```
-#### disable SSH key host checking
+#### Disable SSH key host checking
 ```
 vi /etc/ansible/ansible.cfg
 ```
