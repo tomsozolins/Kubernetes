@@ -58,3 +58,8 @@ host_key_checking = False
 ```
 ansible-playbook playbook_demo.yaml
 ```
+
+#### Run example command
+```
+ansible -m ping all --ask-pass
+```
