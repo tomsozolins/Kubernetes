@@ -1,7 +1,7 @@
 ## Manual Ansible installation on kubernetes
 ```
 # kubectl apply -f ansible.yaml
-# kubectl exec --stdin --tty ansible -- /bin/bash
+# kubectl exec --stdin --tty deployment/ansible -- /bin/bash
 ```
 
 ##### Installation
