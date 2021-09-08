@@ -6,6 +6,9 @@
     win_file:
       path: C:\install
       state: directory
+  - name: Configure IE proxy to not use auto detected settings with a configuration script
+    win_inet_proxy:
+      auto_detect: no
   - name: Download the Zabbix-agent2 installer
     win_get_url:
       url: 'https://cdn.zabbix.com/zabbix/binaries/stable/5.0/5.0.15/zabbix_agent2-5.0.15-windows-amd64-openssl.msi'
