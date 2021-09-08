@@ -75,6 +75,9 @@ host_key_checking = False
 ```
 ansible-playbook playbook_demo.yaml
 ```
+```
+# ansible-playbook -l windows_servers playbook.yaml --ask-pass --ask-become-pass
+```
 
 #### Run example command
 ```
