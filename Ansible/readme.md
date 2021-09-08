@@ -46,6 +46,14 @@ vi /etc/ansible/playbook.yaml
       state: started
 ```
 
+#### Root privileges example
+```
+- name: Ensure the httpd service is running
+  service:
+    name: httpd
+    state: started
+  become: yes
+```
 #### disable SSH key host checking
 ```
 vi /etc/ansible/ansible.cfg
