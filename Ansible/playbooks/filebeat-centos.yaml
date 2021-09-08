@@ -1,0 +1,22 @@
+- name: Filebeat update
+  hosts: centos_servers
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Ensure Filebeat is at the latest version
+    ansible.builtin.yum:
+      name: filebeat
+      state: latest
+    notify:
+    - Restart filebeat
+  - name: Flush handlers
+    meta: flush_handlers
+  - name: Ensure that Filebeat is started
+    ansible.builtin.service:
+      name: filebeat
+      state: started
+  handlers:
+    - name: Restart filebeat
+      ansible.builtin.service:
+        name: filebeat
+        state: restarted
