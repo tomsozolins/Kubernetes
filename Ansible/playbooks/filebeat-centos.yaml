@@ -1,4 +1,4 @@
-- name: Filebeat update
+- name: Filebeat install on CentOS
   hosts: centos_servers
   remote_user: root
   become: yes
