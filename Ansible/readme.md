@@ -34,16 +34,22 @@ vi /etc/ansible/playbook.yaml
   hosts: flexstor
   remote_user: root
   debugger: on_failed
-
   tasks:
   - name: Ensure zabbix-agent2 is at the latest version
     ansible.builtin.yum:
       name: zabbix-agent2
       state: latest
+    notify:
+    - Restart zabbix-agent2
   - name: Ensure that zabbix-agent2 is started
     ansible.builtin.service:
       name: zabbix-agent2
       state: started
+  handlers:
+    - name: Restart zabbix-agent2
+      ansible.builtin.service:
+        name: zabbix-agent2
+        state: restarted
 ```
 
 #### Root privileges example
