@@ -16,6 +16,10 @@ config:
 ```
 helm install kube-vip kube-vip/kube-vip --values kube-vip-values.yaml --namespace kube-system
 ```
+### Upgrading
+```
+helm upgrade kube-vip kube-vip/kube-vip --values kube-vip-values.yaml --namespace kube-system
+```
 
 ## Regular install kube-vip
 ```
