@@ -23,6 +23,8 @@ example-group:
   hosts:
     example-hostname:
       ansible_host: X.X.X.X
+    example-hostname2:
+      ansible_host: X.X.X.X
 ```
 #### Example playbook
 ```
