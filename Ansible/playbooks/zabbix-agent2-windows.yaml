@@ -1,13 +1,30 @@
 ---
-- name: Zabbix agent2 update on Windows
+- name: Zabbix agent2 update Windows
   hosts: windows_servers
   tasks:
   - name: Download the Zabbix-agent2 installer
     win_get_url:
-      url: 'https://cdn.zabbix.com/zabbix/binaries/stable/5.0/5.0.15/zabbix_agent-5.0.15-windows-amd64-openssl.msi'
-      dest: 'C:\install\zabbix_agent-5.0.15-windows-amd64-openssl.msi'
+      url: 'https://cdn.zabbix.com/zabbix/binaries/stable/5.0/5.0.15/zabbix_agent2-5.0.15-windows-amd64-openssl.msi'
+      dest: 'C:\install\zabbix_agent2-5.0.15-windows-amd64-openssl.msi'
       proxy_use_default_credential: yes
   - name: Install Zabbix-agent2
-    ansible.windows.win_package:
-      path: 'C:\install\zabbix_agent-5.0.15-windows-amd64-openssl.msi'
+    win_package:
+      path: 'C:\install\zabbix_agent2-5.0.15-windows-amd64-openssl.msi'
       state: present
+      arguments:
+        - /qn
+        - ENABLEREMOTECOMMANDS=1
+        - SERVER=X.X.X.X
+        - LISTENPORT=10050
+        - SERVERACTIVE=X.X.X.X
+        - ENABLEPATH=1
+  - name: Restart Zabbix Agent2 service
+    win_service:
+      name: Zabbix Agent 2
+      state: restarted
+    changed_when: False
+  - name: Set Zabbix Agent2 service startup mode to auto and ensure it is started
+    win_service:
+      name: Zabbix Agent 2
+      start_mode: auto
+      state: started
