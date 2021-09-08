@@ -33,6 +33,7 @@ vi /etc/ansible/playbook.yaml
 - name: Zabbix agent2 update
   hosts: flexstor
   remote_user: root
+  debugger: on_failed
 
   tasks:
   - name: Ensure zabbix-agent2 is at the latest version
