@@ -1,0 +1,22 @@
+---
+- name: Zabbix agent2 update
+  hosts: centos_servers
+  remote_user: root
+  tasks:
+  - name: Ensure zabbix-agent2 is at the latest version
+    ansible.builtin.yum:
+      name: zabbix-agent2
+      state: latest
+    notify:
+    - Restart zabbix-agent2
+  - name: Flush handlers
+    meta: flush_handlers
+  - name: Ensure that zabbix-agent2 is started
+    ansible.builtin.service:
+      name: zabbix-agent2
+      state: started
+  handlers:
+    - name: Restart zabbix-agent2
+      ansible.builtin.service:
+        name: zabbix-agent2
+        state: restarted
