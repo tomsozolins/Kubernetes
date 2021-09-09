@@ -17,8 +17,10 @@ https://github.com/ansible/awx-operator/releases
 
 #### Troubleshoot
 ```
-# kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
-# kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
+kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
+kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
+kubectl exec -it awx-777c9b84cb-dtkbt --container awx-ee -- bash
+ansible --version
 ```
 
 #### Manual file based playbook configuration
