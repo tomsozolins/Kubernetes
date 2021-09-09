@@ -20,6 +20,7 @@ https://github.com/ansible/awx-operator/releases
 kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl exec -it awx-X --container awx-ee -- bash
+kubectl exec -it deployment.apps/awx --container awx-ee -- bash
 ansible --version
 
 kubectl logs deployment.apps/awx --container awx-web --tail 10
