@@ -5,6 +5,8 @@ metadata:
 spec:
   ingress_type: ingress
   hostname: ansible-awx
+  service_type: LoadBalancer
+  loadbalancer_protocol: https
   #loadbalancer_protocol: http
   #loadbalancer_port: 80
   # resource limits
