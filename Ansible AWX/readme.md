@@ -21,6 +21,10 @@ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl exec -it awx-X --container awx-ee -- bash
 ansible --version
+
+kubectl logs deployment.apps/awx --container awx-web --tail 10
+kubectl logs deployment.apps/awx --container awx-task --tail 10
+kubectl logs deployment.apps/awx --container awx-ee --tail 10
 ```
 
 #### Manual file based playbook configuration
