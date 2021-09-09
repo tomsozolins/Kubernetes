@@ -19,7 +19,7 @@ https://github.com/ansible/awx-operator/releases
 ```
 kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
-kubectl exec -it awx-777c9b84cb-dtkbt --container awx-ee -- bash
+kubectl exec -it awx-X --container awx-ee -- bash
 ansible --version
 ```
 
@@ -27,7 +27,7 @@ ansible --version
 ##### Find awx pod id
 ```
 kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
-kubectl exec -it awx-777c9b84cb-dtkbt --container awx-web -- bash
+kubectl exec -it awx-X --container awx-web -- bash
 ```
 ##### Create playbook directory
 ```
