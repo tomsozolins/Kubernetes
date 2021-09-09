@@ -21,3 +21,14 @@ https://github.com/ansible/awx-operator/releases
 # kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
 # kubectl exec -it awx-777c9b84cb-dtkbt --container awx-ee -- bash
 ```
+
+#### Manual file based playbook configuration
+##### Create playbook directory
+```
+cd /var/lib/awx/projects/playbooks
+mkdir playbooks
+```
+##### Create playbook files in this directory and use them in AWX UI
+```
+vi example-playbook.yaml
+```
