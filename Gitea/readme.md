@@ -23,6 +23,9 @@ persistence:
 ```
 ```
 postgresql:
+  global:
+    postgresql:
+      postgresqlPassword: secret-password
   persistence:
     size: 20Gi
     storageClass: longhorn
