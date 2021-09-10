@@ -35,6 +35,11 @@ ingress:
   hosts:
     - host: gitea
 ```
+```
+gitea:
+  admin:
+    password: secret-password
+```
 
 #### Deploy Gitea
 ```
