@@ -29,6 +29,12 @@ postgresql:
   volumePermissions:
     enabled: true
 ```
+```
+ingress:
+  enabled: true
+  hosts:
+    - host: gitea
+```
 
 #### Deploy Gitea
 ```
