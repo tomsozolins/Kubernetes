@@ -3,7 +3,8 @@
 #### Check release tag and apply operator manifest
 https://github.com/ansible/awx-operator/releases
 ```
-# kubectl apply -f https://raw.githubusercontent.com/ansible/awx-operator/<TAG>/deploy/awx-operator.yaml
+curl https://raw.githubusercontent.com/ansible/awx-operator/0.13.0/deploy/awx-operator.yaml -o awx-operator.yaml
+kubectl apply -f awx-operator.yaml
 ```
 
 ## Deploy AWX
