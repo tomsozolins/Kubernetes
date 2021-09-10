@@ -1,8 +1,8 @@
 ## Gitea
 ```
-# helm repo add gitea-charts https://dl.gitea.io/charts/
-# helm repo update
-# helm show values gitea-charts/gitea > gitea-values.yaml
+helm repo add gitea-charts https://dl.gitea.io/charts/
+helm repo update
+helm show values gitea-charts/gitea > gitea-values.yaml
 ```
 #### Modify gitea-values.yaml
 ```
@@ -19,7 +19,7 @@ persistence:
     - ReadWriteOnce
   labels: {}
   annotations: {}
-  storageClass: longhorn-replica-3
+  storageClass: longhorn
 ```
 ```
 postgresql:
@@ -30,12 +30,22 @@ postgresql:
       postgresqlPassword: gitea
       servicePort: 5432
   persistence:
-    size: 10Gi
-    storageClass: myOwnStorageClass
+    size: 20Gi
+    storageClass: longhorn
 ```
 
 #### Deploy Gitea
 ```
-# helm install gitea gitea-charts/gitea --values gitea-values.yaml
-# kubectl --namespace default port-forward svc/gitea-http 3000:3000
+helm install gitea gitea-charts/gitea --values gitea-values.yaml
+```
+
+#### Upgrade
+```
+helm repo update
+helm upgrade gitea gitea-charts/gitea --values gitea-values.yaml
+```
+
+##### test http
+```
+kubectl --namespace default port-forward svc/gitea-http 3000:3000
 ```
