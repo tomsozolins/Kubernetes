@@ -23,15 +23,11 @@ persistence:
 ```
 ```
 postgresql:
-  global:
-    postgresql:
-      postgresqlDatabase: gitea
-      postgresqlUsername: gitea
-      postgresqlPassword: gitea
-      servicePort: 5432
   persistence:
     size: 20Gi
     storageClass: longhorn
+  volumePermissions:
+    enabled: true
 ```
 
 #### Deploy Gitea
