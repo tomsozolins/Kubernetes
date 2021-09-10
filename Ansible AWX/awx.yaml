@@ -8,43 +8,73 @@ spec:
   #service_type: LoadBalancer
   #loadbalancer_protocol: http
   #loadbalancer_port: 80
-  # resource limits
-  web_resource_requirements:
-    requests:
-      cpu: 1000m
-      memory: 2Gi
-    limits:
-      cpu: 2000m
-      memory: 4Gi
-  task_resource_requirements:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      cpu: 1000m
-      memory: 2Gi
-  ee_resource_requirements:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      cpu: 1000m
-      memory: 2Gi
-  # persistent config
   projects_persistence: true
   projects_storage_class: longhorn
   projects_storage_size: 30Gi
-  # managed database
-  postgres_resource_requirements:
-    requests:
-      cpu: 500m
-      memory: 2Gi
-    limits:
-      cpu: "1"
-      memory: 4Gi
   postgres_storage_requirements:
     requests:
       storage: 30Gi
     limits:
       storage: 50Gi
   postgres_storage_class: longhorn
+  web_extra_volume_mounts: |
+    - name: krb5-conf
+      mountPath: /etc/krb5.conf
+      subPath: krb5.conf
+  task_extra_volume_mounts: |
+    - name: krb5-conf
+      mountPath: /etc/krb5.conf
+      subPath: krb5.conf
+  ee_extra_volume_mounts: |
+    - name: krb5-conf
+      mountPath: /etc/krb5.conf
+      subPath: krb5.conf
+  extra_volumes: |
+    - name: krb5-conf
+      configMap:
+        defaultMode: 420
+        items:
+          - key: krb5.conf
+            path: krb5.conf
+        name: tower-extra-config
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: tower-extra-config
+  namespace: default
+data:
+  krb5.conf: |-
+    # To opt out of the system crypto-policies configuration of krb5, remove the
+    # symlink at /etc/krb5.conf.d/crypto-policies which will not be recreated.
+    includedir /etc/krb5.conf.d/
+
+    [logging]
+        default = FILE:/var/log/krb5libs.log
+        kdc = FILE:/var/log/krb5kdc.log
+        admin_server = FILE:/var/log/kadmind.log
+
+    [libdefaults]
+        dns_lookup_realm = false
+        ticket_lifetime = 24h
+        renew_lifetime = 7d
+        forwardable = true
+        rdns = false
+        pkinit_anchors = FILE:/etc/pki/tls/certs/ca-bundle.crt
+        spake_preauth_groups = edwards25519
+        default_realm = SWQA.TST
+        default_ccache_name = KEYRING:persistent:%{uid}
+
+    [realms]
+
+    DOMAIN.COM = {
+            serv1 = serv1.DOMAIN.COM
+            serv2 = serv2.DOMAIN.COM
+            serv3 = serv3.DOMAIN.COM
+        }
+
+    [domain_realm]
+
+    .domain.com = DOMAIN.COM
+    domain.com = DOMAIN.COM
+
