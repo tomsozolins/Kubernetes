@@ -68,9 +68,9 @@ data:
     [realms]
 
     DOMAIN.COM = {
-            serv1 = serv1.DOMAIN.COM
-            serv2 = serv2.DOMAIN.COM
-            serv3 = serv3.DOMAIN.COM
+            kdc = serv1.DOMAIN.COM
+            kdc = serv2.DOMAIN.COM
+            kdc = serv3.DOMAIN.COM
         }
 
     [domain_realm]
