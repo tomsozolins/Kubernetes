@@ -33,7 +33,9 @@ kubectl logs deployment.apps/awx --container awx-ee --tail 10
 ```
 kubectl exec -it deployment.apps/awx --container awx-ee -- bash
 ansible-galaxy collection install community.zabbix
+ansible-galaxy collection list
 ls -l /home/runner/.ansible/collections/ansible_collections/
+ls -l /usr/share/ansible/collections/ansible_collections/community/
 ```
 #### Manual file based playbook configuration
 ##### Find awx pod id
