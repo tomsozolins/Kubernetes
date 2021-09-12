@@ -61,8 +61,7 @@ data:
         forwardable = true
         rdns = false
         pkinit_anchors = FILE:/etc/pki/tls/certs/ca-bundle.crt
-        spake_preauth_groups = edwards25519
-        default_realm = SWQA.TST
+        default_realm = DOMAIN.COM
         default_ccache_name = KEYRING:persistent:%{uid}
 
     [realms]
