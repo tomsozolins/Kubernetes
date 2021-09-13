@@ -1,0 +1,5 @@
+  
+---
+roles:
+  - name: elastic.beats
+    version: v7.14.0
