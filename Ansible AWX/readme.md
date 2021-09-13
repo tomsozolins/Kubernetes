@@ -37,18 +37,3 @@ ansible-galaxy collection list
 ls -l /home/runner/.ansible/collections/ansible_collections/
 ls -l /usr/share/ansible/collections/ansible_collections/community/
 ```
-#### Manual file based playbook configuration
-##### Find awx pod id
-```
-kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
-kubectl exec -it awx-X --container awx-web -- bash
-```
-##### Create playbook directory
-```
-cd /var/lib/awx/projects/playbooks
-mkdir playbooks
-```
-##### Create playbook files in this directory and use them in AWX UI
-```
-vi example-playbook.yaml
-```
