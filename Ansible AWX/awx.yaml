@@ -55,25 +55,20 @@ data:
         admin_server = FILE:/var/log/kadmind.log
 
     [libdefaults]
+        default_realm = WEBSITE.COM
         dns_lookup_realm = false
+        dns_lookup_kdc = false
         ticket_lifetime = 24h
         renew_lifetime = 7d
         forwardable = true
-        rdns = false
-        pkinit_anchors = FILE:/etc/pki/tls/certs/ca-bundle.crt
-        default_realm = DOMAIN.COM
-        default_ccache_name = KEYRING:persistent:%{uid}
 
     [realms]
-
-    DOMAIN.COM = {
-            kdc = serv1.DOMAIN.COM
-            kdc = serv2.DOMAIN.COM
-            kdc = serv3.DOMAIN.COM
-        }
+     WEBSITE.COM = {
+      kdc = WIN-SA2TXZOTVMV.website.com
+      admin_server = WIN-SA2TXZOTVMV.website.com
+     }
 
     [domain_realm]
-
-    .domain.com = DOMAIN.COM
-    domain.com = DOMAIN.COM
+     .website.com = WEBSITE.COM
+     website.com = WEBSITE.COM
 
