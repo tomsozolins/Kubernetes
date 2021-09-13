@@ -64,8 +64,8 @@ data:
 
     [realms]
      WEBSITE.COM = {
-      kdc = WIN-SA2TXZOTVMV.website.com
-      admin_server = WIN-SA2TXZOTVMV.website.com
+      kdc = example.website.com
+      admin_server = example.website.com
      }
 
     [domain_realm]
