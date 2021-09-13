@@ -1,0 +1,22 @@
+- name: Filebeat installation
+  hosts: all
+  remote_user: root
+  become: yes
+  roles:
+  - role: elastic.beats
+  vars:
+    beats_version: 7.14.1
+    beat: filebeat
+    beat_conf:
+      filebeat:
+        inputs:
+          - type: log
+            enabled: true
+            paths:
+              - /var/log/*.log
+    output_conf:
+      elasticsearch:
+        hosts: ["https://elasticsearch-es-http:9200"]
+        username: "elastic"
+        password: "secret"
+        ssl.verification_mode: none
