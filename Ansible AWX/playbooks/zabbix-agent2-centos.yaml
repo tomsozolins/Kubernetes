@@ -27,9 +27,21 @@
     yum:
       name: "zabbix-agent2"
       state: present
-    
-  - name: cp templates zabbix_agent2.conf to zabbix agent dir
-    template: src=/var/lib/awx/projects/_8__awx/zabbix_agent2.conf dest=/etc/zabbix/zabbix_agent2.conf
+      
+  - name: Insert/Update zabbix_agent2 configuration
+    blockinfile:
+      path: /etc/zabbix/zabbix_agent2.conf
+      block: |
+        PidFile=/var/run/zabbix/zabbix_agent2.pid
+        LogFile=/var/log/zabbix/zabbix_agent2.log
+        LogFileSize=0
+        Server={{server}}
+        ServerActive={{server}}
+        Hostname=Zabbix server
+        Include=/etc/zabbix/zabbix_agent2.d/*.conf
+        ControlSocket=/tmp/agent.sock
+        Plugins.Smart.Timeout=30
+            
   - name: configure zabbix ceph module
     copy:
          content: "Plugins.Ceph.InsecureSkipVerify=true"
