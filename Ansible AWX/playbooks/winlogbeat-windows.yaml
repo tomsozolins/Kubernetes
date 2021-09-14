@@ -59,10 +59,6 @@
           password: "secret"
           ssl.verification_mode: none
 
-        processors:
-          - add_host_metadata: ~
-          - add_cloud_metadata: ~
-          - add_docker_metadata: ~
       dest: C:\ProgramData\Elastic\Beats\winlogbeat\winlogbeat.yml
 
   - name: Set failure actions for a service with no reset period
