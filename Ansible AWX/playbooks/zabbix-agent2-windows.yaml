@@ -1,0 +1,48 @@
+---
+- name: Zabbix agent2 installation on Windows
+  hosts: all
+  tasks:
+  - name: Create directory structure
+    ansible.windows.win_file:
+      path: C:\install
+      state: directory
+  - name: Configure IE proxy to not use auto detected settings
+    ansible.windows.win_regedit:
+      path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
+      name: AutoDetect
+      data: 0
+      type: dword
+  - name: Download the Zabbix-agent2 installer
+    ansible.windows.win_get_url:
+      url: 'https://cdn.zabbix.com/zabbix/binaries/stable/5.0/5.0.15/zabbix_agent2-5.0.15-windows-amd64-openssl.msi'
+      dest: 'C:\install\zabbix_agent2.msi'
+      proxy_use_default_credential: yes
+  - name: Install Zabbix-agent2
+    ansible.windows.win_package:
+      path: 'C:\install\zabbix_agent2.msi'
+      state: present
+      arguments:
+        - /qn
+        - ENABLEREMOTECOMMANDS=1
+        - SERVER=X.X.X.X
+        - LISTENPORT=10050
+        - SERVERACTIVE=X.X.X.X
+        - ENABLEPATH=1
+  - name: Set failure actions for a service with no reset period
+    ansible.windows.win_service:
+      name: service name
+      failure_actions:
+      - type: restart
+        delay_ms: 5000
+      - type: restart
+        delay_ms: 5000
+  - name: Restart Zabbix Agent2 service
+    ansible.windows.win_service:
+      name: Zabbix Agent 2
+      state: restarted
+    changed_when: False
+  - name: Set Zabbix Agent2 service startup mode to auto and ensure it is started
+    ansible.windows.win_service:
+      name: Zabbix Agent 2
+      start_mode: auto
+      state: started
