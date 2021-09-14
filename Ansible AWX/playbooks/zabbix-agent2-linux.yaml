@@ -1,0 +1,12 @@
+- name: Zabbix Agent 2 installation on Linux
+  hosts: all
+  roles:
+    - role: community.zabbix.zabbix_agent
+      zabbix_agent_server: X.X.X.X
+      zabbix_agent_serveractive: X.X.X.X
+      zabbix_agent2: True
+      zabbix_agent2_plugins:
+        - name: Ceph
+          options:
+            - parameter: Plugins.Ceph.InsecureSkipVerify
+              value: true
