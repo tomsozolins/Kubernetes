@@ -1,0 +1,10 @@
+---
+- name: Qradar windows event log setup
+  hosts: all
+  tasks:
+  - name: Add domain user to a local admin group
+    ansible.windows.win_group_membership:
+      name: Event Log Readers
+      members:
+        - DOMAIN\User
+      state: present
