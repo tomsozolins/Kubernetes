@@ -30,7 +30,7 @@
         - ENABLEPATH=1
   - name: Set failure actions for a service with no reset period
     ansible.windows.win_service:
-      name: service name
+      name: Zabbix Agent 2
       failure_actions:
       - type: restart
         delay_ms: 5000
