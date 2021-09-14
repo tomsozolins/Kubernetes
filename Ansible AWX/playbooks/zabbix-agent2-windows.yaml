@@ -34,8 +34,6 @@
       failure_actions:
       - type: restart
         delay_ms: 5000
-      - type: restart
-        delay_ms: 5000
   - name: Restart Zabbix Agent2 service
     ansible.windows.win_service:
       name: Zabbix Agent 2
