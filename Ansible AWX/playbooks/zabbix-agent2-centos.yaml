@@ -16,6 +16,7 @@
   - name: add zabbix repository
     yum_repository:
       name: Zabbix Official Repository - $basearch
+      description: Zabbix Official Repository
       file: zabbix
       baseurl: http://repo.zabbix.com/zabbix/5.0/rhel/7/$basearch/
       gpgcheck: yes
