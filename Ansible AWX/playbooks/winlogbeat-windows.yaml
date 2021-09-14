@@ -1,0 +1,80 @@
+---
+- name: Winlogbeat installation on Windows
+  hosts: all
+  tasks:
+  - name: Create directory structure
+    ansible.windows.win_file:
+      path: C:\install
+      state: directory
+      
+  - name: Configure IE proxy to not use auto detected settings
+    ansible.windows.win_regedit:
+      path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
+      name: AutoDetect
+      data: 0
+      type: dword
+      
+  - name: Download the winlogbeat installer
+    ansible.windows.win_get_url:
+      url: 'https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-7.14.1-windows-x86_64.msi'
+      dest: 'C:\install\winlogbeat.msi'
+      proxy_use_default_credential: yes
+      
+  - name: Install winlogbeat
+    ansible.windows.win_package:
+      path: 'C:\install\winlogbeat.msi'
+      state: present
+      arguments:
+        - /qn
+        
+  - name: Copy winlogbeat configuration
+    ansible.windows.win_copy:
+      content: |+
+        winlogbeat.event_logs:
+          name: Application
+          ignore_older: 72h
+          name: System
+          name: Security
+          processors:
+            - script:
+                lang: javascript
+                id: security
+                file: ${path.home}/module/security/config/winlogbeat-security.js
+          name: Microsoft-Windows-Sysmon/Operational
+          processors:
+            - script:
+                lang: javascript
+                id: sysmon
+                file: ${path.home}/module/sysmon/config/winlogbeat-sysmon.js
+                
+        setup.template.settings:
+          index.number_of_shards: 1
+        output.elasticsearch:
+          hosts: ["https://elasticsearch-monitoring-es-http:9200"]
+          username: "elastic"
+          password: "secret"
+          ssl.verification_mode: none
+        processors:
+          - add_host_metadata: ~
+          - add_cloud_metadata: ~
+          - add_docker_metadata: ~   
+      dest: C:\ProgramData\Elastic\Beats\winlogbeat\winlogbeat.yml
+      
+  - name: Set failure actions for a service with no reset period
+    ansible.windows.win_service:
+      name: winlogbeat
+      failure_actions:
+      - type: restart
+        delay_ms: 5000
+        
+  - name: Restart winlogbeat service
+    ansible.windows.win_service:
+      name: winlogbeat
+      state: restarted
+    changed_when: False
+    
+  - name: Set winlogbeat service startup mode to auto and ensure it is started
+    ansible.windows.win_service:
+      name: winlogbeat
+      start_mode: auto
+      state: started
