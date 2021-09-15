@@ -1,0 +1,97 @@
+---
+- name: Filebeat installation on Windows
+  hosts: all
+  tasks:
+  - name: Create directory structure
+    ansible.windows.win_file:
+      path: C:\install
+      state: directory
+  - name: Configure IE proxy to not use auto detected settings
+    ansible.windows.win_regedit:
+      path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings
+      name: AutoDetect
+      data: 0
+      type: dword
+  - name: Download the Filebeat installer
+    ansible.windows.win_get_url:
+      url: 'https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.14.1-windows-x86_64.msi'
+      dest: 'C:\install\filebeat.msi'
+      proxy_use_default_credential: yes
+  - name: Install filebeat
+    ansible.windows.win_package:
+      path: 'C:\install\filebeat.msi'
+      state: present
+      arguments:
+        - /qn
+        
+  - name: Copy filebeat configuration
+    ansible.windows.win_copy:
+      content: |
+        filebeat.inputs:
+        - type: log
+          enabled: true
+          paths:
+            - C:\ProgramData\example\*.log
+        - type: log
+          enabled: true
+          paths:
+            - C:\Log\example1\*.csv
+          fields:
+            example1: true        
+  
+        - type: log
+          enabled: true
+          paths:
+            - C:\Log\example2\*.csv
+          fields:
+            example2: true
+        - type: log
+          enabled: true
+          paths:
+            - C:\example3\*.csv
+          fields:
+            example3: true
+                
+        filebeat.config.modules:
+          path: ${path.config}/modules.d/*.yml
+          reload.enabled: false
+        setup.template.settings:
+          index.number_of_shards: 1
+        
+        processors:
+          - add_host_metadata:
+              when.not.contains.tags: forwarded
+        output.elasticsearch:
+          hosts: ["https://X.X.X.X"]
+          username: "elastic"
+          password: "secret"
+          ssl.verification_mode: none
+          pipelines:
+            - pipeline: "pipeline1"
+              when.contains:
+                log.file.path: "example1"
+            - pipeline: "pipeline2"
+              when.contains:
+                log.file.path: "example2"
+            - pipeline: "pipeline3"
+              when.contains:
+                log.file.path: "example3"
+      dest: C:\ProgramData\Elastic\Beats\filebeat\filebeat.yml
+      
+  - name: Set failure actions for a service with no reset period
+    ansible.windows.win_service:
+      name: filebeat
+      failure_actions:
+      - type: restart
+        delay_ms: 5000
+        
+  - name: Restart filebeat service
+    ansible.windows.win_service:
+      name: filebeat
+      state: restarted
+    changed_when: False
+  - name: Set filebeat service startup mode to auto and ensure it is started
+    ansible.windows.win_service:
+      name: filebeat
+      start_mode: auto
+      state: started
