@@ -1,0 +1,23 @@
+---
+- name: Windows Event log configuration
+  hosts: all
+  tasks:
+  - name: Change the maximum size and overflow action for Application
+      community.windows.win_eventlog:
+      name: Application
+      maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
+      state: present
+  - name: Change the maximum size and overflow action for Security
+      community.windows.win_eventlog:
+      name: Security
+      maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
+      state: present
+      
+  - name: Change the maximum size and overflow action for System
+      community.windows.win_eventlog:
+      name: System
+      maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
+      state: present
