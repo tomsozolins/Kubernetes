@@ -1,0 +1,32 @@
+---
+- name: Rsyslog forward to Qradar - CentOS 7
+  hosts: all 
+  tasks:
+  - name: Install the 'rsyslog' package
+    yum:
+      name: "rsyslog"
+      state: present
+      
+  - name: Copy rsyslog configuration to /etc/rsyslog.d/
+    copy:
+      content: >
+                *.* action(type="omfwd" template="RSYSLOG_ForwardFormat" Target="X.X.X.X" Port="514" Protocol="udp")
+      dest: /etc/rsyslog.d/qradar.conf
+    notify:
+    - Restart rsyslog
+  - name: Flush handlers
+    meta: flush_handlers
+  - name: Ensure that rsyslog is started
+    ansible.builtin.service:
+      name: rsyslog
+      state: started
+  - name: Enable service rsyslog, and not touch the state
+    ansible.builtin.service:
+      name: rsyslog
+      enabled: yes
+      
+  handlers:
+    - name: Restart rsyslog
+      ansible.builtin.service:
+        name: rsyslog
+        state: restarted
