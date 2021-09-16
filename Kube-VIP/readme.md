@@ -25,8 +25,14 @@ helm upgrade kube-vip kube-vip/kube-vip --values kube-vip-values.yaml --namespac
 ```
 # export VIP=x.x.x.x
 # export INTERFACE=ethx
-# curl -s https://kube-vip.io/manifests/rbac.yaml > /var/lib/rancher/k3s/server/manifests/kube-vip-rbac.yaml
-# curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee /var/lib/rancher/k3s/server/manifests/kube-vip.yaml
+# curl -s https://kube-vip.io/manifests/rbac.yaml > kube-vip-rbac.yaml
+# curl -sL kube-vip.io/k3s | vipAddress=$VIP vipInterface=$INTERFACE sh | sudo tee kube-vip.yaml
+# kubectl apply -f kube-vip-rbac.yaml
+# kubectl apply -f kube-vip.yaml
+```
+
+## Modify kubeconfig to vip address
+```
 # vi /etc/rancher/k3s/k3s.yaml
 - cluster:
      server: <VIP-address>
