@@ -65,22 +65,19 @@ data:
         admin_server = FILE:/var/log/kadmind.log
 
     [libdefaults]
-        default_realm = WEBSITE.COM
-        dns_lookup_realm = false
-        dns_lookup_kdc = false
+        default_realm = DOMAIN.COM
         ticket_lifetime = 24h
         renew_lifetime = 7d
-        forwardable = true
 
     [realms]
-     WEBSITE.COM = {
-      kdc = example.website.com
-      admin_server = example.website.com
+     DOMAIN.COM = {
+      kdc = example.domain.com
+      admin_server = example2.domain.com
      }
 
     [domain_realm]
-     .website.com = WEBSITE.COM
-     website.com = WEBSITE.COM
+     .domain.com = DOMAIN.COM
+     domain.com = DOMAIN.COM
 ---
 kind: ConfigMap
 apiVersion: v1
