@@ -61,6 +61,11 @@ https://github.com/alexellis/k3sup
 # kubectl get endpoints kube-controller-manager --namespace=kube-system -o yaml
 ```
 
+#### Garbage collection for images failed 
+```
+k3s crictl rmi --prune
+```
+
 ## Uninstall K3S
 
 #### master node
