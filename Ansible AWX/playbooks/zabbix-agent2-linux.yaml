@@ -11,5 +11,5 @@
       zabbix_agent2_plugins:
         - name: Ceph
           options:
-            - parameter: Plugins.Ceph.InsecureSkipVerify
-              value: true
+            - parameter: InsecureSkipVerify
+              value: "true"
