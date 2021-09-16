@@ -11,3 +11,4 @@
           options:
             - parameter: Plugins.Ceph.InsecureSkipVerify
               value: true
+      zabbix_agent_dont_detect_ip: true
