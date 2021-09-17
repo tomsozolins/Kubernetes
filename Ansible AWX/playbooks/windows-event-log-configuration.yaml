@@ -6,46 +6,28 @@
     community.windows.win_eventlog:
       name: Application
       maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
       state: present
   
-  - name: Change the overflow action for Application
-    community.windows.win_eventlog:
-      name: Application
-      overflow_action: DoNotOverwrite
-      
-  - name: Change the overflow action for Application
-    community.windows.win_eventlog:
-      name: Application
-      overflow_action: OverwriteAsNeeded
-
   - name: Change the maximum size for Security
     community.windows.win_eventlog:
       name: Security
       maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
       state: present
   
-  - name: Change the overflow action for Security
-    community.windows.win_eventlog:
-      name: Application
-      overflow_action: DoNotOverwrite
-
-  - name: Change the overflow action for Security
-    community.windows.win_eventlog:
-      name: Security
-      overflow_action: OverwriteAsNeeded
-      
   - name: Change the maximum size for System
     community.windows.win_eventlog:
       name: System
       maximum_size: 2GB
+      overflow_action: OverwriteAsNeeded
       state: present
+
+  - name: Change the overflow action for Application
+    ansible.windows.win_shell: wevtutil.exe sl application /Rt:false
   
-  - name: Change the overflow action for System
-    community.windows.win_eventlog:
-      name: System
-      overflow_action: DoNotOverwrite
+  - name: Change the overflow action for Security
+    ansible.windows.win_shell: wevtutil.exe sl security /Rt:false
 
   - name: Change the overflow action for System
-    community.windows.win_eventlog:
-      name: System
-      overflow_action: OverwriteAsNeeded
+    ansible.windows.win_shell: wevtutil.exe sl system /Rt:false
